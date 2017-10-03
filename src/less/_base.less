@@ -1,0 +1,161 @@
+/*  БАЗОВЫЕ НАСТРОЙКИ  */
+.reset();
+html{
+  font-size: 18px;
+
+  .md({
+    font-size: 16px;
+    });
+  .xs({
+    font-size: 14px;
+    });
+}
+body{
+  font-family: @Calibri;
+  line-height: 1.35;
+  &:extend(.fz18);
+  color: @color1;
+  font-weight: normal;
+  font-style: normal;
+}
+*{
+  box-sizing: border-box;
+  max-height: 100000px;
+}
+img{
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+a{
+  color: inherit;
+  text-decoration: none;
+
+  &:hover{
+    text-decoration: underline;
+  }
+}
+strong{
+	font-family: @CalibriB;
+}
+em{
+	font-family: @CalibriI;
+}
+em strong, strong em{
+	font-family: @CalibriBI;
+}
+//input[type="text"]{
+//  .placeholder(@color1);
+//}
+.main-page{
+  min-height: 80vh;
+  min-width: 320px;
+  overflow: hidden;
+}
+.container{
+  position: relative;
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+.text-center{
+  text-align: center;
+}
+.d-ib{
+  display: inline-block;
+}
+.box-btn{
+  text-align: center;
+}
+.btn1{
+  display: inline-block;
+  width: 100%;
+  max-width: 200px;
+  padding: 15px 15px 16px;
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  background: green;
+  .transition();
+  font-family: @Calibri;
+  line-height: 1.2;
+  color: #fff;
+  &:extend(.fz18);
+
+  &:hover{
+    background: darken(green, 10%);
+    text-decoration: none;
+  }
+}
+
+.desc-1{
+  text-align: center;
+  font: 2rem/1.2 @CalibriB;
+  color: @color1;
+
+  // .md({
+  //   font-size: 28px;
+  // });
+  // .sm({
+  //   font-size: 24px;
+  // });
+  // .xs({
+  //   font-size: 21px;
+  // });  
+}
+
+/*  ФОРМА  */
+.form{
+  padding: 30px 20px;
+
+  &__modal{
+    text-align: center;
+  }
+  &__desc{
+    font-family: @CalibriB;
+    line-height: 1.2;
+    color: @color1;
+    margin-bottom: 15px;
+    &:extend(.fz20);
+  }
+  &__box-input{
+    max-width: 400px;
+    margin: 0 auto 12px;
+  }
+  &__box-submit{
+    max-width: 400px;
+    margin: 0 auto 12px;
+  }
+  &__input{
+    width: 100%;
+    display: inline-block;
+    font-family: @Calibri;
+    color: @color1;
+    padding: 7px 10px 8px;
+    border: 1px solid @color1;
+    background: #fff;
+    &:extend(.fz18);
+  }
+  &__submit{
+    width: 100%;
+    border: none;
+    &:extend(.fz18);
+
+    &[disabled]{
+      background: darken(green, 10%);
+    }
+  }
+}
+
+/*  МОДАЛЬНОЕ ОКНО  */
+.modal{
+  position: relative;
+  width: 350px;
+  margin: 40px auto;
+  background: #fff;
+
+  .xxs({
+    width: 290px;
+  });
+}
