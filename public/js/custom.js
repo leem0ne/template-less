@@ -40,7 +40,7 @@ $(document).ready(function(){
 	});
 
 	//Отправка заявок
-  $('form').on('submit', function(e){
+	$('form').on('submit', function(e){
 		e.preventDefault();
 		
 		var form = $(this),
