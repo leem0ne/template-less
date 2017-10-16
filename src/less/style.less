@@ -16,13 +16,14 @@
 
   &__container{
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-around;
 
-    .sm({
-      flex-wrap: wrap;
-      justify-content: space-around;
-      });
+    .sm-min({
+      justify-content: space-between;
+      flex-wrap: nowrap;
+    });
   }
   &__left{
     flex: 0 0 200px;
