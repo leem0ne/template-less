@@ -16,14 +16,25 @@
     "gulp-group-css-media-queries": "^1.2.0",
     "gulp-imagemin": "^3.1.1",
     "gulp-less": "^3.1.0",
+    "gulp-notify": "^3.2.0",
     "gulp-pug": "^3.3.0",
     "gulp-uglify": "^2.0.0",
     "gulp.spritesmith": "^6.2.1",
     "smart-grid": "^2.0.0"
   },
   "dependencies": {
+    "gulp-clean-css": "^3.9.3",
     "magnific-popup": "^1.1.0",
+    "node-notifier": "^5.2.1",
     "slick-carousel": "^1.7.1"
   },
-  "description": "My Template LESS and PUG"
+  "description": "My Template LESS and PUG",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leem0ne/template-less.git"
+  },
+  "bugs": {
+    "url": "https://github.com/leem0ne/template-less/issues"
+  },
+  "homepage": "https://github.com/leem0ne/template-less#readme"
 }

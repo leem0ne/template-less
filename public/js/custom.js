@@ -6,10 +6,20 @@ $(document).ready(function(){
 		if ($(scroll_el).length != 0) {
 			$('html, body').animate({ scrollTop: $(scroll_el).offset().top }, 800);
 		}
+		if ( $('.toggle').is(':visible') )
+			$('#top-menu').css('display', '');
 		return false;
 	});
 
-	//fancybox
+	$('.toggle').on('click', function() {
+		if ( $('#top-menu').is(':visible') ) {
+			$('#top-menu').css('display', '');
+		} else {
+			$('#top-menu').css('display', 'block');
+		}
+	});
+
+	//magnificPopup
 	$('.phone__btn').magnificPopup({
 		type: 'inline',
 		closeBtnInside: true,
@@ -40,6 +50,13 @@ $(document).ready(function(){
 	});
 
 	//Отправка заявок
+	$('input[name="agree"]').on('click', function() {
+		if ( $(this).prop('checked') ) {
+			$(this).closest('form').find('.form__submit').removeAttr('disabled');
+		} else {
+			$(this).closest('form').find('.form__submit').attr('disabled', 'disabled');
+		}
+	});
 	$('form').on('submit', function(e){
 		e.preventDefault();
 		

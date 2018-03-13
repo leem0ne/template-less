@@ -7,39 +7,62 @@
 @import "_library.less";
 @import "_base.less";
 @import "smart-grid.less";
-@import "../../node_modules/slick-carousel/slick/slick.less";
+@import "_form-modal.less";
+@import "slick.less";
 
 
 /*  ШАПКА  */
 .header, .footer{
   padding: 15px 0 15px;
 
-  &__container{
+  &__row{
+    margin: 0 -15px;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: center;
 
     .sm-min({
       justify-content: space-between;
       flex-wrap: nowrap;
     });
   }
-  &__left{
+  &__toggle{
+    flex: 0 0 34px;
+    margin: 0 15px;
+    .sm-min({
+      display: none;
+    });
+  }
+  &__logo{
     flex: 0 0 200px;
+    margin: 0 15px;
   }
   &__center{
-    flex: 1 1 400px;
+    flex: 1 1 100%;
+    margin: 15px 15px;
+    text-align: center;
+
+    .sm-min({
+      text-align: left;
+      flex-basis: 400px;
+      });
   }
   &__right{
     flex: 0 0 200px;
+    margin: 0 15px;
+    text-align: center;
+
+    .sm-min({
+      text-align: right;
+      });
   }
 }
 .logo{
   max-width: 200px;
 }
 .phone{
-  text-align: right;
+
 }
 .phone__link{
   font-family: @Calibri;
@@ -54,9 +77,33 @@
 .phone__btn{
   
 }
+.toggle{
+  display: block;
+  width: 34px;
+  padding: 4px 5px 0;
+  background: transparent;
+  border: 0px;
+  text-align: center;
+  font-size: 0;
+
+  span{
+    display: inline-block;
+    width: 24px;
+    height: 3px;
+    background: green;
+    margin-bottom: 4px;
+  }
+}
 
 
 /*  НАВИГАЦИЯ  */
+.navigation{
+  display: none;
+
+  .sm-min({
+    display: block;
+    });
+}
 .nav{
   padding: 10px 0;
   list-style: none;
@@ -71,8 +118,11 @@
   }
 
   &__item{
-    display: inline-block;
-    padding: 0 5px;
+    padding-bottom: 10px;
+    .sm-min({
+      display: inline-block;
+      padding: 0 5px;
+    });
   }
   &__link{
     display: inline-block;

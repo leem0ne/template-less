@@ -8,57 +8,72 @@ var gulp 				= require('gulp'),
 	csso 				= require('gulp-csso'),
 	spritesmith			= require('gulp.spritesmith'),
 	gcmq 				= require('gulp-group-css-media-queries'),
-	pug 				= require('gulp-pug');
+	pug 				= require('gulp-pug'),
+	cleanCSS 			= require('gulp-clean-css'),
+	notify 				= require("gulp-notify");
 
 require('events').EventEmitter.defaultMaxListeners = 0;
 
-gulp.task('default', ['less', 'pug', 'imagemin'], function(){
+var options = {
+	folder: '1gulp1',
+	sprite: 'icons',
+};
+
+gulp.task('default', ['less', 'pug'], function(){
 	//return true;
 });
 
 gulp.task('less', function(){
-	return gulp.src('./src/less/style.less')
+	return gulp.src([
+				'../'+ options.folder +'/src/less/style.less',
+			])
 		.pipe(less())
+		.on("error", notify.onError({
+			message: "Less-Error: <%= error.message %>",
+			title: "Less"
+		}))
 		.pipe(gcmq())
 		.pipe(autoprefixer(['last 10 versions', '> 1%', 'ie 8', 'ie 7'], {cascade: true}))
-		.pipe(gulp.dest('./public/css'))
-		.pipe(browserSync.reload({stream: true}));
+		.pipe(cleanCSS({compatibility: 'ie8', format: 'keep-breaks'}))
+		.pipe(gulp.dest('../'+ options.folder +'/public/css'))
+		.pipe(browserSync.reload({ stream: true }));
 });
 
 gulp.task('pug', function(){
-	return gulp.src('./src/index.pug')
+	return gulp.src('../'+ options.folder +'/src/index.pug')
 		.pipe(pug({
 			pretty: true
 		}))
-		.pipe(gulp.dest('./public'))
-		.pipe(browserSync.reload({
-			stream: true
-		}));
+		.on("error", notify.onError({
+			message: "Pug-Error: <%= error.message %>",
+			title: "Pug"
+		}))
+		.pipe(gulp.dest('../'+ options.folder +'/public'))
+		.pipe(browserSync.reload({ stream: true }));
 });
 
 gulp.task('browser-sync', function(){
 	browserSync({
 		server: {
-			baseDir: './public',
+			baseDir: '../'+ options.folder +'/',
 		},
 		notify: false
 	});
 });
 
 gulp.task('imagemin', function(){
-	return gulp.src('./src/img/**/*')
+	return gulp.src('../'+ options.folder +'/public/img/**/*')
 		.pipe(imagemin({
 			interlaced: true,
 		    progressive: true,
 		    optimizationLevel: 5,
 		    svgoPlugins: [{removeViewBox: true}]
 		}))
-		.pipe(gulp.dest('./public/img/'));
+		.pipe(gulp.dest('../'+ options.folder +'/public/img/'));
 });
 
-var icons = 'icons';
 gulp.task('imagesprite', function () {
-  return gulp.src('./src/img/' + icons + '/*.png')
+  return gulp.src('../'+ options.folder +'/public/img/' + options.sprite + '/*.png')
   	.pipe(spritesmith({
   		algorithms: 'binary-tree',
 	    imgName: icons + '.png',
@@ -67,7 +82,7 @@ gulp.task('imagesprite', function () {
 	    imgPath: '../img/' + icons + '.png',
 	    padding: 10,
 	  }))
-	  .pipe(gulp.dest('./src/img/'));
+	  .pipe(gulp.dest('../'+ options.folder +'/src/img/'));
 });
 
 gulp.task('jsmin', function() {
@@ -75,32 +90,32 @@ gulp.task('jsmin', function() {
   		'node_modules/jquery/dist/jquery.min.js',
 		'node_modules/slick-carousel/slick/slick.min.js',
 		'node_modules/magnific-popup/dist/jquery.magnific-popup.min.js',
-		'./src/js/**/*.js'
+		'../'+ options.folder +'/src/libs/**/*.js'
 	])
     .pipe(concat('libs.min.js'))
     .pipe(uglify())
-    .pipe(gulp.dest('./public/js'));
+    .pipe(gulp.dest('../'+ options.folder +'/public/js'));
 });
 
 gulp.task('cssmin', function() {
   return gulp.src([
   		'node_modules/magnific-popup/dist/magnific-popup.css',
-  		'./src/css/**/*.css'
+  		'../'+ options.folder +'/src/libs/**/*.css'
   	])
     .pipe(concat('libs.min.css'))
     .pipe(csso())
     .pipe(gulp.dest('./public/css'));
 });
 
-gulp.task('watch', ['pug', 'less', 'imagemin', 'browser-sync'], function(){
-	gulp.watch('./src/less/**/*.less', ['less']);
-	gulp.watch('./src/**/*.pug', ['pug']);
+gulp.task('watch', ['pug', 'less', 'browser-sync'], function(){
+	gulp.watch('../'+ options.folder +'/src/less/**/*.less', ['less']);
+	gulp.watch('../'+ options.folder +'/src/**/*.pug', ['pug']);
 	//gulp.watch('./public/*.html', browserSync.reload);
-	gulp.watch('./public/js/*.js', browserSync.reload);
+	gulp.watch('../'+ options.folder +'/public/js/*.js', browserSync.reload);
 });
 
 gulp.task('less-watch', ['less', 'browser-sync'], function(){
-	gulp.watch('./src/less/**/*.less', ['less']);
+	gulp.watch('../'+ options.folder +'/src/less/**/*.less', ['less']);
 });
 
 
@@ -149,6 +164,6 @@ var settings = {
 };
 
 gulp.task('smartgrid', function() {
-  return smartgrid('./src/less', settings);
+  return smartgrid('../'+ options.folder +'/src/less', settings);
 });
  

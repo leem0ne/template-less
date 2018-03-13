@@ -9,55 +9,61 @@
 @CalibriI: Calibrii, Tahoma, sans-serif;
 
 //Размеры адаптивности
+@w-lg: 1170px;
+@w-md: 960px;
+@w-sm: 780px;
+@w-xs: 560px;
+@w-xxs: 425px;
+
 .lg(@rules) {
-  @media screen and (max-width: 1170px) { @rules(); }
+  @media screen and (max-width: @w-lg) { @rules(); }
 }
 .md(@rules) {
-  @media screen and (max-width: 960px) { @rules(); }
+  @media screen and (max-width: @w-md) { @rules(); }
 }
 .sm(@rules) {
-  @media screen and (max-width: 780px) { @rules(); }
+  @media screen and (max-width: @w-sm) { @rules(); }
 }
 .xs(@rules) {
-  @media screen and (max-width: 560px) { @rules(); }
+  @media screen and (max-width: @w-xs) { @rules(); }
 }
 .xxs(@rules) {
-  @media screen and (max-width: 425px) { @rules(); }
+  @media screen and (max-width: @w-xxs) { @rules(); }
 }
 
 .xs-sm(@rules) {
-  @media screen (min-width: 560px) and (max-width: 780px) { @rules(); }
+  @media screen (min-width: (@w-xs + 1)) and (max-width: @w-sm) { @rules(); }
 }
 .xs-md(@rules) {
-  @media screen (min-width: 560px) and (max-width: 960px) { @rules(); }
+  @media screen (min-width: (@w-xs + 1)) and (max-width: @w-md) { @rules(); }
 }
 .xs-lg(@rules) {
-  @media screen (min-width: 560px) and (max-width: 1170px) { @rules(); }
+  @media screen (min-width: (@w-xs + 1)) and (max-width: @w-lg) { @rules(); }
 }
 .sm-md(@rules) {
-  @media screen (min-width: 780px) and (max-width: 960px) { @rules(); }
+  @media screen (min-width: (@w-sm + 1)) and (max-width: @w-md) { @rules(); }
 }
 .sm-lg(@rules) {
-  @media screen (min-width: 780px) and (max-width: 1170px) { @rules(); }
+  @media screen (min-width: (@w-sm + 1)) and (max-width: @w-lg) { @rules(); }
 }
 .md-lg(@rules) {
-  @media screen (min-width: 960px) and (max-width: 1170px) { @rules(); }
+  @media screen (min-width: (@w-md + 1)) and (max-width: @w-lg) { @rules(); }
 }
 
 .lg-min(@rules) {
-  @media screen and (min-width: 1170px) { @rules(); }
+  @media screen and (min-width: @w-lg) { @rules(); }
 }
 .md-min(@rules) {
-  @media screen and (min-width: 960px) { @rules(); }
+  @media screen and (min-width: @w-md) { @rules(); }
 }
 .sm-min(@rules) {
-  @media screen and (min-width: 780px) { @rules(); }
+  @media screen and (min-width: @w-sm) { @rules(); }
 }
 .xs-min(@rules) {
-  @media screen and (min-width: 560px) { @rules(); }
+  @media screen and (min-width: @w-xs) { @rules(); }
 }
 .xxs-min(@rules) {
-  @media screen and (min-width: 425px) { @rules(); }
+  @media screen and (min-width: @w-xxs) { @rules(); }
 }
 
 

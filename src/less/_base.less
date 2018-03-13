@@ -13,7 +13,7 @@ html{
 body{
   font-family: @Calibri;
   line-height: 1.35;
-  &:extend(.fz18);
+  font-size: 16px;
   color: @color1;
   font-weight: normal;
   font-style: normal;
@@ -24,8 +24,6 @@ body{
 }
 img{
   display: block;
-  max-width: 100%;
-  height: auto;
 }
 a{
   color: inherit;
@@ -49,9 +47,22 @@ em strong, strong em{
 }
 .container{
   position: relative;
-  max-width: 1170px;
+  max-width: @w-xxs - 30px;
   margin: 0 auto;
   padding: 0 15px;
+
+  .xs-min({
+    max-width: @w-xs - 30px;
+    });
+  .sm-min({
+    max-width: @w-sm - 30px;
+    });
+  .md-min({
+    max-width: @w-md - 30px;
+    });
+  .lg-min({
+    max-width: @w-lg - 30px;
+    });
 }
 .text-center{
   text-align: center;
@@ -128,69 +139,5 @@ em strong, strong em{
   font: 2rem/1.2 @CalibriB;
   color: @color1;
 
-  // .md({
-  //   font-size: 28px;
-  // });
-  // .sm({
-  //   font-size: 24px;
-  // });
-  // .xs({
-  //   font-size: 21px;
-  // });  
 }
 
-/*  ФОРМА  */
-.form{
-  padding: 30px 20px;
-
-  &__modal{
-    text-align: center;
-  }
-  &__desc{
-    font-family: @CalibriB;
-    line-height: 1.2;
-    color: @color1;
-    margin-bottom: 15px;
-    &:extend(.fz20);
-  }
-  &__box-input{
-    max-width: 400px;
-    margin: 0 auto 12px;
-  }
-  &__box-submit{
-    max-width: 400px;
-    margin: 0 auto 12px;
-  }
-  &__input{
-    width: 100%;
-    display: inline-block;
-    font-family: @Calibri;
-    color: @color1;
-    padding: 7px 10px 8px;
-    border: 1px solid @color1;
-    background: #fff;
-    &:extend(.fz18);
-  }
-  &__submit{
-    width: 100%;
-    border: none;
-    &:extend(.fz18);
-
-    &[disabled]{
-      background: darken(green, 10%);
-    }
-  }
-}
-
-/*  МОДАЛЬНОЕ ОКНО  */
-.modal{
-  position: relative;
-  width: 290px;
-  margin: 40px auto;
-  background: #fff;
-  padding: 30px 20px;
-
-  .xxs-min({
-    width: 350px;
-  });
-}
