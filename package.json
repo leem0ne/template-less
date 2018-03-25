@@ -23,7 +23,9 @@
     "smart-grid": "^2.0.0"
   },
   "dependencies": {
+    "gsap": "^1.20.4",
     "gulp-clean-css": "^3.9.3",
+    "jquery": "^3.3.1",
     "magnific-popup": "^1.1.0",
     "node-notifier": "^5.2.1",
     "slick-carousel": "^1.7.1"
