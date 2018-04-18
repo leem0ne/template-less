@@ -15,8 +15,8 @@ var gulp 				= require('gulp'),
 require('events').EventEmitter.defaultMaxListeners = 0;
 
 var options = {
-	folder: 'global',
-	sprite: 'social',
+	folder: 'belsant',
+	sprite: 'icons',
 };
 
 gulp.task('default', ['less', 'pug'], function(){
@@ -40,7 +40,7 @@ gulp.task('less', function(){
 });
 
 gulp.task('pug', function(){
-	return gulp.src('../'+ options.folder +'/src/index.pug')
+	return gulp.src('../'+ options.folder +'/src/*.pug')
 		.pipe(pug({
 			pretty: true
 		}))
@@ -87,18 +87,20 @@ gulp.task('imagesprite', function () {
 
 gulp.task('jsmin', function() {
   return gulp.src([
-  		// 'node_modules/jquery/dist/jquery.min.js',
-		// 'node_modules/slick-carousel/slick/slick.min.js',
-		// 'node_modules/magnific-popup/dist/jquery.magnific-popup.min.js',
-		// '../'+ options.folder +'/src/libs/**/*.js'
-		'../'+ options.folder +'/src/libs/jquery.gsap.min.js',
-		'../'+ options.folder +'/src/libs/TweenMax.min.js',
-		'../'+ options.folder +'/src/libs/TimelineMax.min.js',
-		'../'+ options.folder +'/src/libs/wow.min.js',
-		// '../'+ options.folder +'/src/libs/ScrollMagic.min.js',
-		// '../'+ options.folder +'/src/libs/animation.gsap.js',
+  		'node_modules/jquery/dist/jquery.min.js',
+		'node_modules/slick-carousel/slick/slick.min.js',
+		'node_modules/magnific-popup/dist/jquery.magnific-popup.min.js',
+		'../'+ options.folder +'/src/libs/**/*.js',
+		// 'node_modules/gsap/jquery.gsap.js',
+		// 'node_modules/gsap/TweenMax.js',
+		// 'node_modules/gsap/TimelineMax.js',
+		// 'node_modules/gsap/CSSPlugin.js',
+		// '../'+ options.folder +'/src/libs/wow.min.js',
+		// 'node_modules/scrollmagic/scrollmagic/minified/ScrollMagic.min.js',
+		// 'node_modules/scrollmagic/scrollmagic/minified/plugins/animation.gsap.min.js',
+		// 'node_modules/scrollmagic/scrollmagic/minified/plugins/jquery.ScrollMagic.min.js',
 	])
-    .pipe(concat('gsap-TweenMax-TimelineMax.min.js'))
+    .pipe(concat('libs.min.js'))
     .pipe(uglify())
     .pipe(gulp.dest('../'+ options.folder +'/build/js'));
 });
@@ -106,7 +108,7 @@ gulp.task('jsmin', function() {
 gulp.task('cssmin', function() {
   return gulp.src([
   		'node_modules/magnific-popup/dist/magnific-popup.css',
-  		'../'+ options.folder +'/src/libs/**/*.css'
+  		// '../'+ options.folder +'/src/libs/**/*.css'
   	])
     .pipe(concat('libs.min.css'))
     .pipe(csso())

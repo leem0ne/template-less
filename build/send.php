@@ -65,6 +65,10 @@ if ( !$userData['phone'] ) {
     $mail->Subject = "Заявка с сайта";
     $mail->Body = $message;
 
+    if(file_exists($_FILES['fileupload']['tmp_name'])){
+        $mail->AddAttachment($_FILES['fileupload']['tmp_name'], $_FILES['fileupload']['name']);
+    }
+
     /* Отправка сообщения */         
     if  ( $mail->send() ){
         $response = $responseError[100];  //сообщение отправлено
