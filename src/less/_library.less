@@ -51,19 +51,19 @@
 }
 
 .lg-min(@rules) {
-  @media screen and (min-width: @w-lg) { @rules(); }
+  @media screen and (min-width: (@w-lg + 1)) { @rules(); }
 }
 .md-min(@rules) {
-  @media screen and (min-width: @w-md) { @rules(); }
+  @media screen and (min-width: (@w-md + 1)) { @rules(); }
 }
 .sm-min(@rules) {
-  @media screen and (min-width: @w-sm) { @rules(); }
+  @media screen and (min-width: (@w-sm + 1)) { @rules(); }
 }
 .xs-min(@rules) {
-  @media screen and (min-width: @w-xs) { @rules(); }
+  @media screen and (min-width: (@w-xs + 1)) { @rules(); }
 }
 .xxs-min(@rules) {
-  @media screen and (min-width: @w-xxs) { @rules(); }
+  @media screen and (min-width: (@w-xxs + 1)) { @rules(); }
 }
 
 

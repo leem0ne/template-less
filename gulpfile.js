@@ -15,7 +15,7 @@ var gulp 				= require('gulp'),
 require('events').EventEmitter.defaultMaxListeners = 0;
 
 var options = {
-	folder: 'belsant',
+	folder: 'house',
 	sprite: 'icons',
 };
 
