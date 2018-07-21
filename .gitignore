@@ -3,3 +3,4 @@ mydocuments/
 public/PHPMailer
 *.txt
 *.zip
+package-lock.json

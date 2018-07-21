@@ -84,6 +84,10 @@
 	transition: all @speed ease-in;
 }
 
+.width(@w, @c: 1, @offset: @offset){
+	width: ~'calc(@{w} / @{c} - @{offset})';
+}
+
 .placeholder(@color){
 	&::-webkit-input-placeholder{ color: @color; }
 	&::-moz-placeholder{ color: @color; }/* Firefox 19+ */

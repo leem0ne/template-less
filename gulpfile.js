@@ -1,21 +1,21 @@
-var gulp 				= require('gulp'),
-	less 				= require('gulp-less'),
+var gulp 					= require('gulp'),
+	less 						= require('gulp-less'),
 	browserSync 		= require('browser-sync'),
 	autoprefixer 		= require('gulp-autoprefixer'),
-	imagemin			= require('gulp-imagemin'),
-	concat				= require('gulp-concat'),
-	uglify 				= require('gulp-uglify'),
-	csso 				= require('gulp-csso'),
+	imagemin				= require('gulp-imagemin'),
+	concat					= require('gulp-concat'),
+	uglify 					= require('gulp-uglify'),
+	csso 						= require('gulp-csso'),
 	spritesmith			= require('gulp.spritesmith'),
-	gcmq 				= require('gulp-group-css-media-queries'),
-	pug 				= require('gulp-pug'),
-	cleanCSS 			= require('gulp-clean-css'),
-	notify 				= require("gulp-notify");
+	gcmq 						= require('gulp-group-css-media-queries'),
+	pug 						= require('gulp-pug'),
+	cleanCSS 				= require('gulp-clean-css'),
+	notify 					= require("gulp-notify");
 
 require('events').EventEmitter.defaultMaxListeners = 0;
 
 var options = {
-	folder: 'house',
+	folder: 'saltHR',
 	sprite: 'icons',
 };
 
@@ -25,7 +25,7 @@ gulp.task('default', ['less', 'pug'], function(){
 
 gulp.task('less', function(){
 	return gulp.src([
-				'../'+ options.folder +'/src/less/style.less',
+				'../'+ options.folder +'/build/assets/less/style.less',
 			])
 		.pipe(less())
 		.on("error", notify.onError({
@@ -40,7 +40,7 @@ gulp.task('less', function(){
 });
 
 gulp.task('pug', function(){
-	return gulp.src('../'+ options.folder +'/src/*.pug')
+	return gulp.src('../'+ options.folder +'/build/assets/*.pug')
 		.pipe(pug({
 			pretty: true
 		}))
@@ -88,14 +88,17 @@ gulp.task('imagesprite', function () {
 gulp.task('jsmin', function() {
   return gulp.src([
   		'node_modules/jquery/dist/jquery.min.js',
-		'node_modules/slick-carousel/slick/slick.min.js',
+		// 'node_modules/slick-carousel/slick/slick.min.js',
+		// 'node_modules/swiper/dist/js/swiper.min.js',
 		'node_modules/magnific-popup/dist/jquery.magnific-popup.min.js',
-		'../'+ options.folder +'/src/libs/**/*.js',
+		// 'node_modules/wow.js/dist/wow.min.js',
+		// 'node_modules/imagesloaded/imagesloaded.pkgd.min.js',
+		'../'+ options.folder +'/build/assets/libs/**/*.js',
 		// 'node_modules/gsap/jquery.gsap.js',
 		// 'node_modules/gsap/TweenMax.js',
 		// 'node_modules/gsap/TimelineMax.js',
 		// 'node_modules/gsap/CSSPlugin.js',
-		// '../'+ options.folder +'/src/libs/wow.min.js',
+		// '../'+ options.folder +'/build/assets/libs/wow.min.js',
 		// 'node_modules/scrollmagic/scrollmagic/minified/ScrollMagic.min.js',
 		// 'node_modules/scrollmagic/scrollmagic/minified/plugins/animation.gsap.min.js',
 		// 'node_modules/scrollmagic/scrollmagic/minified/plugins/jquery.ScrollMagic.min.js',
@@ -108,7 +111,9 @@ gulp.task('jsmin', function() {
 gulp.task('cssmin', function() {
   return gulp.src([
   		'node_modules/magnific-popup/dist/magnific-popup.css',
-  		// '../'+ options.folder +'/src/libs/**/*.css'
+  		// 'node_modules/swiper/dist/css/swiper.min.css',
+  		// 'node_modules/animate.css/animate.min.css',
+  		'../'+ options.folder +'/build/assets/libs/**/*.css'
   	])
     .pipe(concat('libs.min.css'))
     .pipe(csso())
@@ -116,14 +121,14 @@ gulp.task('cssmin', function() {
 });
 
 gulp.task('watch', ['pug', 'less', 'browser-sync'], function(){
-	gulp.watch('../'+ options.folder +'/src/less/**/*.less', ['less']);
-	gulp.watch('../'+ options.folder +'/src/**/*.pug', ['pug']);
+	gulp.watch('../'+ options.folder +'/build/assets/less/**/*.less', ['less']);
+	gulp.watch('../'+ options.folder +'/build/assets/**/*.pug', ['pug']);
 	//gulp.watch('./build/*.html', browserSync.reload);
 	gulp.watch('../'+ options.folder +'/build/js/*.js', browserSync.reload);
 });
 
 gulp.task('less-watch', ['less', 'browser-sync'], function(){
-	gulp.watch('../'+ options.folder +'/src/less/**/*.less', ['less']);
+	gulp.watch('../'+ options.folder +'/build/assets/less/**/*.less', ['less']);
 });
 
 
@@ -172,6 +177,6 @@ var settings = {
 };
 
 gulp.task('smartgrid', function() {
-  return smartgrid('../'+ options.folder +'/src/less', settings);
+  return smartgrid('../'+ options.folder +'/build/assets/less', settings);
 });
  

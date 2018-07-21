@@ -10,6 +10,15 @@
     width: 350px;
   });
 }
+.mfp-wrap .mfp-content {
+  opacity: 0;
+  transition: all .3s ease-out;
+  transform: translateY(50px);
+}
+.mfp-wrap.mfp-ready .mfp-content {
+  opacity: 1;
+  transform: translateY(0px);
+}
 
 /*  ФОРМА  */
 .form{
@@ -17,9 +26,6 @@
     text-align: center;
   }
   &__desc{
-    font-family: @CalibriB;
-    line-height: 1.2;
-    color: @color1;
     margin-bottom: 15px;
     &:extend(.fz20);
   }
@@ -34,7 +40,6 @@
   &__input{
     width: 100%;
     display: inline-block;
-    font-family: @Calibri;
     color: @color1;
     padding: 7px 10px 8px;
     border: 1px solid @color1;
@@ -44,7 +49,6 @@
   &__submit{
     width: 100%;
     border: none;
-    &:extend(.fz18);
 
     &[disabled]{
       background: darken(green, 10%);
