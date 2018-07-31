@@ -15,7 +15,7 @@ var gulp 					= require('gulp'),
 require('events').EventEmitter.defaultMaxListeners = 0;
 
 var options = {
-	folder: 'saltHR',
+	folder: 'shum',
 	sprite: 'icons',
 };
 
@@ -88,7 +88,7 @@ gulp.task('imagesprite', function () {
 gulp.task('jsmin', function() {
   return gulp.src([
   		'node_modules/jquery/dist/jquery.min.js',
-		// 'node_modules/slick-carousel/slick/slick.min.js',
+		'node_modules/slick-carousel/slick/slick.min.js',
 		// 'node_modules/swiper/dist/js/swiper.min.js',
 		'node_modules/magnific-popup/dist/jquery.magnific-popup.min.js',
 		// 'node_modules/wow.js/dist/wow.min.js',

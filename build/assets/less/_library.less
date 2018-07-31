@@ -16,54 +16,54 @@
 @w-xxs: 425px;
 
 .lg(@rules) {
-  @media screen and (max-width: @w-lg) { @rules(); }
+  @media (max-width: @w-lg) { @rules(); }
 }
 .md(@rules) {
-  @media screen and (max-width: @w-md) { @rules(); }
+  @media (max-width: @w-md) { @rules(); }
 }
 .sm(@rules) {
-  @media screen and (max-width: @w-sm) { @rules(); }
+  @media (max-width: @w-sm) { @rules(); }
 }
 .xs(@rules) {
-  @media screen and (max-width: @w-xs) { @rules(); }
+  @media (max-width: @w-xs) { @rules(); }
 }
 .xxs(@rules) {
-  @media screen and (max-width: @w-xxs) { @rules(); }
+  @media (max-width: @w-xxs) { @rules(); }
 }
 
 .xs-sm(@rules) {
-  @media screen (min-width: (@w-xs + 1)) and (max-width: @w-sm) { @rules(); }
+  @media (min-width: (@w-xs + 1)) and (max-width: @w-sm) { @rules(); }
 }
 .xs-md(@rules) {
-  @media screen (min-width: (@w-xs + 1)) and (max-width: @w-md) { @rules(); }
+  @media (min-width: (@w-xs + 1)) and (max-width: @w-md) { @rules(); }
 }
 .xs-lg(@rules) {
-  @media screen (min-width: (@w-xs + 1)) and (max-width: @w-lg) { @rules(); }
+  @media (min-width: (@w-xs + 1)) and (max-width: @w-lg) { @rules(); }
 }
 .sm-md(@rules) {
-  @media screen (min-width: (@w-sm + 1)) and (max-width: @w-md) { @rules(); }
+  @media (min-width: (@w-sm + 1)) and (max-width: @w-md) { @rules(); }
 }
 .sm-lg(@rules) {
-  @media screen (min-width: (@w-sm + 1)) and (max-width: @w-lg) { @rules(); }
+  @media (min-width: (@w-sm + 1)) and (max-width: @w-lg) { @rules(); }
 }
 .md-lg(@rules) {
-  @media screen (min-width: (@w-md + 1)) and (max-width: @w-lg) { @rules(); }
+  @media (min-width: (@w-md + 1)) and (max-width: @w-lg) { @rules(); }
 }
 
 .lg-min(@rules) {
-  @media screen and (min-width: (@w-lg + 1)) { @rules(); }
+  @media (min-width: (@w-lg + 1)) { @rules(); }
 }
 .md-min(@rules) {
-  @media screen and (min-width: (@w-md + 1)) { @rules(); }
+  @media (min-width: (@w-md + 1)) { @rules(); }
 }
 .sm-min(@rules) {
-  @media screen and (min-width: (@w-sm + 1)) { @rules(); }
+  @media (min-width: (@w-sm + 1)) { @rules(); }
 }
 .xs-min(@rules) {
-  @media screen and (min-width: (@w-xs + 1)) { @rules(); }
+  @media (min-width: (@w-xs + 1)) { @rules(); }
 }
 .xxs-min(@rules) {
-  @media screen and (min-width: (@w-xxs + 1)) { @rules(); }
+  @media (min-width: (@w-xxs + 1)) { @rules(); }
 }
 
 
