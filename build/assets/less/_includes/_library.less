@@ -1,91 +1,86 @@
-//Переменные
-@color1: #212121;
+@import '_vars.less';
 
-@color3: #285fa3;
-
-@Calibri: Calibri, Tahoma, sans-serif;
-@CalibriB: Calibrib, Tahoma, sans-serif;
-@CalibriBI: Calibribi, Tahoma, sans-serif;
-@CalibriI: Calibrii, Tahoma, sans-serif;
-
-//Размеры адаптивности
-@w-lg: 1170px;
-@w-md: 960px;
-@w-sm: 780px;
-@w-xs: 560px;
-@w-xxs: 425px;
+//FONTS ADAPTIVE
+.fz18(){
+  .md-min({
+    font-size: 18px;
+  });
+}
+.fz20(){
+  font-size: 18px;
+  
+  .md-min({
+    font-size: 20px;
+  });
+}
 
 .lg(@rules) {
-  @media (max-width: @w-lg) { @rules(); }
+  @media screen and (max-width: @w-lg) { @rules(); }
 }
 .md(@rules) {
-  @media (max-width: @w-md) { @rules(); }
+  @media screen and (max-width: @w-md) { @rules(); }
 }
 .sm(@rules) {
-  @media (max-width: @w-sm) { @rules(); }
+  @media screen and (max-width: @w-sm) { @rules(); }
 }
 .xs(@rules) {
-  @media (max-width: @w-xs) { @rules(); }
+  @media screen and (max-width: @w-xs) { @rules(); }
 }
 .xxs(@rules) {
-  @media (max-width: @w-xxs) { @rules(); }
+  @media screen and (max-width: @w-xxs) { @rules(); }
 }
 
 .xs-sm(@rules) {
-  @media (min-width: (@w-xs + 1)) and (max-width: @w-sm) { @rules(); }
+  @media screen and (min-width: (@w-xs + 1)) and (max-width: @w-sm) { @rules(); }
 }
 .xs-md(@rules) {
-  @media (min-width: (@w-xs + 1)) and (max-width: @w-md) { @rules(); }
+  @media screen and (min-width: (@w-xs + 1)) and (max-width: @w-md) { @rules(); }
 }
 .xs-lg(@rules) {
-  @media (min-width: (@w-xs + 1)) and (max-width: @w-lg) { @rules(); }
+  @media screen and (min-width: (@w-xs + 1)) and (max-width: @w-lg) { @rules(); }
 }
 .sm-md(@rules) {
-  @media (min-width: (@w-sm + 1)) and (max-width: @w-md) { @rules(); }
+  @media screen and (min-width: (@w-sm + 1)) and (max-width: @w-md) { @rules(); }
 }
 .sm-lg(@rules) {
-  @media (min-width: (@w-sm + 1)) and (max-width: @w-lg) { @rules(); }
+  @media screen and (min-width: (@w-sm + 1)) and (max-width: @w-lg) { @rules(); }
 }
 .md-lg(@rules) {
-  @media (min-width: (@w-md + 1)) and (max-width: @w-lg) { @rules(); }
+  @media screen and (min-width: (@w-md + 1)) and (max-width: @w-lg) { @rules(); }
 }
 
 .lg-min(@rules) {
-  @media (min-width: (@w-lg + 1)) { @rules(); }
+  @media screen and (min-width: (@w-lg + 1)) { @rules(); }
 }
 .md-min(@rules) {
-  @media (min-width: (@w-md + 1)) { @rules(); }
+  @media screen and (min-width: (@w-md + 1)) { @rules(); }
 }
 .sm-min(@rules) {
-  @media (min-width: (@w-sm + 1)) { @rules(); }
+  @media screen and (min-width: (@w-sm + 1)) { @rules(); }
 }
 .xs-min(@rules) {
-  @media (min-width: (@w-xs + 1)) { @rules(); }
+  @media screen and (min-width: (@w-xs + 1)) { @rules(); }
 }
 .xxs-min(@rules) {
-  @media (min-width: (@w-xxs + 1)) { @rules(); }
+  @media screen and (min-width: (@w-xxs + 1)) { @rules(); }
 }
 
 
 //fonts
-.font(@alias, @name, @weight: normal, @style: normal){
+.font(@alias, @name, @weight: 400, @style: normal){
 	@font-face{
 		font-family: @alias;
 		src: url('../fonts/@{name}.eot');
-  		src: local('☺'), url('../fonts/@{name}.woff') format('woff'), url('../fonts/@{name}.otf') format('otf'), url('../fonts/@{name}.ttf') format('truetype'), url('../fonts/@{name}.svg') format('svg');
-  		font-weight: @weight;
-  		font-style: @style;
+		src: local('☺'), url('../fonts/@{name}.woff') format('woff'), url('../fonts/@{name}.otf') format('otf'), url('../fonts/@{name}.ttf') format('truetype'), url('../fonts/@{name}.svg') format('svg');
+		font-weight: @weight;
+		font-style: @style;
 	}
 }
 
 
 //Прочее
-.transition(@speed: 200ms){
-	transition: all @speed ease-in;
-}
-
-.width(@w, @c: 1, @offset: @offset){
-	width: ~'calc(@{w} / @{c} - @{offset})';
+.width(@w){
+	width: ~'calc(@{w})';
 }
 
 .placeholder(@color){

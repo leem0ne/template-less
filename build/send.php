@@ -1,25 +1,40 @@
 <?php 
-
 use PHPMailer\PHPMailer\PHPMailer;
-//use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\Exception;
 
-//require 'PHPMailer/Exception.php';
+require 'PHPMailer/Exception.php';
 require 'PHPMailer/PHPMailer.php';
 
+
+//  ПОДГОТОВИТЕЛЬНЫЕ ДАННЫЕ
+//  Массив получаемый от формы
 $userData = filter_input_array(INPUT_POST, [
     'name' => FILTER_SANITIZE_STRING,
     'phone' => [
                     'filter' => FILTER_VALIDATE_REGEXP, 
                     'options' => [
-                            'regexp' => '/^[0-9\s\(\)\+\-]{1,18}$/'
+                            'regexp' => '/^[0-9\s\(\)\+\-]{1,18}$/'//email /[0-9a-z_\-]+@[0-9a-z_^\.]+\.[a-z]{2,3}/i
                     ]
                 ],
     'title' => FILTER_SANITIZE_STRING,
     'email' => FILTER_SANITIZE_STRING,
+    'array' => [
+                    'filter' => FILTER_SANITIZE_STRING,
+                    'flags'  => FILTER_REQUIRE_ARRAY,
+                ]
 ]);
-    
-$response = [];
-$responseError = [
+// Заголовки для сообщения (ключи совпадают с ключами массива $userData)
+$titleData = [
+    'name' => 'Имя',
+    'phone' => 'Телефон',
+    'title' => 'Заполнена форма',
+    'email' => 'Email',
+    'array' => 'Какой-то заголовок',
+];
+
+$response = [];     // Возвращаемый массив ответов по ajax - инициализируем
+$message = '';      // html - сообщение для письма - инициализация
+$responseError = [  // коды ответов для js 
     100 => [
         'code' => 100,
         'text' => 'сообщение отправлено'
@@ -49,7 +64,20 @@ if ( !$userData['phone'] ) {
 } else {
 
     /* Формируем сообщение */
-    $message = "<p>Имя: ".$userData['name']."<br>Телефон: ".$userData['phone']."<br>Email: ".$userData['email']."</p><p>Заполнена форма: ".$userData['title']."</p>";
+    // $message = "<p>Имя: ".$userData['name']."<br>Телефон: ".$userData['phone']."<br>Email: ".$userData['email']."</p><p>Заполнена форма: ".$userData['title']."</p>";
+    foreach ($userData as $key => $value) {
+        switch ($key) {
+            case 'array':
+                $message .= '<p>'. $titleData[$key];
+                if (is_array($userData['array']))
+                    $message .= '<br> - '. implode(';<br> - ', $userData['array'] );
+                $message .= '.</p>';
+                break;
+            default:
+                $message .= '<p>'. $titleData[$key] .': '. $value .'</p>';
+        }
+        
+    }
  
 
     $mail = new PHPMailer;

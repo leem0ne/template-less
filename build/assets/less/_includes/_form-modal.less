@@ -1,3 +1,5 @@
+@import '_vars.less';
+
 /*  МОДАЛЬНОЕ ОКНО  */
 .modal{
   position: relative;
@@ -27,7 +29,7 @@
   }
   &__desc{
     margin-bottom: 15px;
-    &:extend(.fz20);
+    .fz20;
   }
   &__box-input{
     max-width: 400px;
@@ -44,7 +46,7 @@
     padding: 7px 10px 8px;
     border: 1px solid @color1;
     background: #fff;
-    &:extend(.fz18);
+    .fz18;
   }
   &__submit{
     width: 100%;

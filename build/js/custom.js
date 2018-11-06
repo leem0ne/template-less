@@ -1,3 +1,14 @@
+//MATCH MEDIA POINTS
+function isMatchMediaArr(arr) {
+  if ( !Array.isArray(arr) ) return [];
+
+  return arr.map(function(el) {
+    return window.matchMedia('(min-width:'+parseInt(el, 10)+'px)').matches;
+  });
+}
+var matchMediaArr = isMatchMediaArr([430, 560, 780, 990, 1250]);
+console.log(matchMediaArr);
+
 $(document).ready(function(){
 
 	//scroll menu
@@ -61,7 +72,7 @@ $(document).ready(function(){
 		e.preventDefault();
 		
 		var form = $(this),
-			 submit = $(form).find('button[type=submit]');
+			  submit = $(form).find('button[type=submit]');
 		$(form).find('input[required]').removeClass('alert');
 		$(submit).attr('disabled', 'disabled');
 		
