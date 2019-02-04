@@ -69,8 +69,8 @@ if ( !$userData['phone'] ) {
         switch ($key) {
             case 'array':
                 $message .= '<p>'. $titleData[$key];
-                if (is_array($userData['array']))
-                    $message .= '<br> - '. implode(';<br> - ', $userData['array'] );
+                if (is_array($userData[$key]))
+                    $message .= '<br> - '. implode(';<br> - ', $userData[$key] );
                 $message .= '.</p>';
                 break;
             default:

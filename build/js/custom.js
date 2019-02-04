@@ -1,11 +1,14 @@
+svg4everybody();//show svg-sprites in IE
+
 //MATCH MEDIA POINTS
 function isMatchMediaArr(arr) {
   if ( !Array.isArray(arr) ) return [];
-
-  return arr.map(function(el) {
-    return window.matchMedia('(min-width:'+parseInt(el, 10)+'px)').matches;
+  var res = [];
+  arr.forEach(function(el, i) {
+    res[el] =  window.matchMedia('(min-width:'+parseInt(el, 10)+'px)').matches;
   });
-}
+  return res;
+} 
 var matchMediaArr = isMatchMediaArr([430, 560, 780, 990, 1250]);
 console.log(matchMediaArr);
 
@@ -41,7 +44,17 @@ $(document).ready(function(){
 	});
 
 	//slider slick
-	$('#slider').slick({
+	var sliderWrap = $('#slider'),
+			slider = $(sliderWrap).find('.slider');
+
+	$(sliderWrap).find('.slider__curr').text(1);
+	$(sliderWrap).find('.slider__count').text( $(slider).find('.slider__slide').length );
+
+	$(slider).on('afterChange', function(slick, currentSlide) {
+		$(sliderWrap).find('.slider__curr').text( currentSlide.currentSlide + 1 );
+	});
+
+	$(slider).slick({
 	    prevArrow: '#arrows-prev',
 	    nextArrow: '#arrows-next',
 	    centerMode: true,

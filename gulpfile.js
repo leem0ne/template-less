@@ -15,8 +15,8 @@ var gulp 					= require('gulp'),
 require('events').EventEmitter.defaultMaxListeners = 0;
 
 var options = {
-	folder: '1gulp1',
-	sprite: 'steps-icons',
+	folder: 'kamchatka',
+	sprite: 'check',
 };
 
 gulp.task('default', ['less', 'pug'], function(){
@@ -37,7 +37,7 @@ gulp.task('less', function(){
 		}))
 		.pipe(gcmq())
 		.pipe(autoprefixer(['last 10 versions', '> 1%', 'ie 8'], {cascade: true}))
-		.pipe(cleanCSS({compatibility: 'ie8'/*, format: 'keep-breaks'*/}))
+		.pipe(cleanCSS({compatibility: 'ie8', format: 'keep-breaks'}))
 		.pipe(gulp.dest('../'+ options.folder +'/build/css'))
 		.pipe(browserSync.reload({ stream: true }));
 });
@@ -96,8 +96,8 @@ gulp.task('jsmin', function() {
 			'node_modules/magnific-popup/dist/jquery.magnific-popup.min.js',
 			// 'node_modules/wow.js/dist/wow.min.js',
 			// 'node_modules/imagesloaded/imagesloaded.pkgd.min.js',
-			'node_modules/popper.js/dist/umd/popper.min.js',
-			'node_modules/tooltip.js/dist/umd/tooltip.min.js',
+			// 'node_modules/popper.js/dist/umd/popper.min.js',
+			// 'node_modules/tooltip.js/dist/umd/tooltip.min.js',
 			'../'+ options.folder +'/build/assets/libs/**/*.js',
 		])
     .pipe(concat('libs.min.js'))

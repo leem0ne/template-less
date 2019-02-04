@@ -1,5 +1,21 @@
 @import '_vars.less';
 
+
+//Прочее
+.width(@w){
+	width: ~'calc(@{w})';
+}
+.width100(){
+	width: ~'calc(100% - @{offset})';
+	margin-left: @offset / 2;
+	margin-right: @offset / 2;
+}
+.width50(){
+	width: ~'calc(50% - @{offset})';
+	margin-left: @offset / 2;
+	margin-right: @offset / 2;
+}
+
 //FONTS ADAPTIVE
 .fz18(){
   .md-min({
@@ -75,19 +91,6 @@
 		font-weight: @weight;
 		font-style: @style;
 	}
-}
-
-
-//Прочее
-.width(@w){
-	width: ~'calc(@{w})';
-}
-
-.placeholder(@color){
-	&::-webkit-input-placeholder{ color: @color; }
-	&::-moz-placeholder{ color: @color; }/* Firefox 19+ */
-	&:-moz-placeholder{ color: @color; }/* Firefox 18- */
-	&:-ms-input-placeholder{ color: @color; }
 }
 
 

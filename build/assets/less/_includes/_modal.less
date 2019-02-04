@@ -1,0 +1,21 @@
+/*  МОДАЛЬНОЕ ОКНО  */
+.modal{
+  position: relative;
+  width: 290px;
+  margin: 40px auto;
+  background: #fff;
+  padding: 30px 20px;
+
+  .xxs-min({
+    width: 350px;
+  });
+}
+.mfp-wrap .mfp-content {
+  opacity: 0;
+  transition: all .3s ease-out;
+  transform: translateY(50px);
+}
+.mfp-wrap.mfp-ready .mfp-content {
+  opacity: 1;
+  transform: translateY(0px);
+}

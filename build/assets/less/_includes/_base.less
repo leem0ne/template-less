@@ -32,6 +32,10 @@ img{
 }
 a{
   color: inherit;
+
+  &[role=button]{
+    cursor: pointer;
+  }
 }
 strong{
 	font-family: @CalibriB;
@@ -117,3 +121,37 @@ strong{
 
 }
 
+.logo{
+  max-width: 200px;
+}
+.phone{
+  &__link{
+    color: @color1;
+    text-decoration: none;
+    .fz18;
+
+    &:hover{
+      text-decoration: none;
+    }
+  }
+  &__btn{}
+}
+.toggle{
+  display: block;
+  width: 34px;
+  padding: 4px 5px 0;
+  background: transparent;
+  border: 0px;
+  text-align: center;
+  font-size: 1px;
+  cursor: pointer;
+  outline: none;
+
+  span{
+    display: inline-block;
+    width: 24px;
+    height: 3px;
+    background: green;
+    margin-bottom: 4px;
+  }
+}
