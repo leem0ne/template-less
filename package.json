@@ -28,6 +28,7 @@
     "gulp-clean-css": "^3.9.3",
     "imagesloaded": "^4.1.4",
     "jquery": "^3.3.1",
+    "js-custom-scroll": "^0.3.1",
     "magnific-popup": "^1.1.0",
     "node-notifier": "^5.2.1",
     "scrollmagic": "^2.0.5",

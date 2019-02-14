@@ -15,7 +15,7 @@ var gulp 					= require('gulp'),
 require('events').EventEmitter.defaultMaxListeners = 0;
 
 var options = {
-	folder: 'kamchatka',
+	folder: 'homyroom',
 	sprite: 'check',
 };
 
@@ -98,6 +98,7 @@ gulp.task('jsmin', function() {
 			// 'node_modules/imagesloaded/imagesloaded.pkgd.min.js',
 			// 'node_modules/popper.js/dist/umd/popper.min.js',
 			// 'node_modules/tooltip.js/dist/umd/tooltip.min.js',
+			'node_modules/js-custom-scroll/dist/js-custom-scroll.min.js',
 			'../'+ options.folder +'/build/assets/libs/**/*.js',
 		])
     .pipe(concat('libs.min.js'))
@@ -110,6 +111,7 @@ gulp.task('cssmin', function() {
   		'node_modules/magnific-popup/dist/magnific-popup.css',
   		// 'node_modules/swiper/dist/css/swiper.min.css',
   		// 'node_modules/animate.css/animate.min.css',
+			'node_modules/js-custom-scroll/dist/js-custom-scroll.css',
   		'../'+ options.folder +'/build/assets/libs/**/*.css'
   	])
     .pipe(concat('libs.min.css'))
@@ -133,7 +135,7 @@ gulp.task('watch-small', ['less', 'browser-sync'], function(){
 
 
 var smartgrid = require('smart-grid');
- 
+
 /* It's principal settings in smart grid project */
 var settings = {
     outputStyle: 'less', /* less || scss || sass || styl */
@@ -164,9 +166,9 @@ var settings = {
             'width': '425px',
             'fields': '15px'
         }
-        /* 
+        /*
         We can create any quantity of break points.
- 
+
         some_name: {
             some_width: 'Npx',
             some_offset: 'N(px|%)'
@@ -178,4 +180,3 @@ var settings = {
 gulp.task('smartgrid', function() {
   return smartgrid('../'+ options.folder +'/build/assets/less', settings);
 });
- 
