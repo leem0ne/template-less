@@ -7,13 +7,13 @@
 }
 .width100(){
 	width: ~'calc(100% - @{offset})';
-	margin-left: @offset / 2;
-	margin-right: @offset / 2;
+	// margin-left: @offset / 2;
+	// margin-right: @offset / 2;
 }
 .width50(){
 	width: ~'calc(50% - @{offset})';
-	margin-left: @offset / 2;
-	margin-right: @offset / 2;
+	// margin-left: @offset / 2;
+	// margin-right: @offset / 2;
 }
 
 //FONTS ADAPTIVE
@@ -87,7 +87,7 @@
 	@font-face{
 		font-family: @alias;
 		src: url('../fonts/@{name}.eot');
-		src: local('☺'), url('../fonts/@{name}.woff') format('woff'), url('../fonts/@{name}.otf') format('otf'), url('../fonts/@{name}.ttf') format('truetype'), url('../fonts/@{name}.svg') format('svg');
+		src: local('☺'), url('../fonts/@{name}.otf') format('otf'), url('../fonts/@{name}.ttf') format('truetype'), url('../fonts/@{name}.woff') format('woff'), url('../fonts/@{name}.svg') format('svg');
 		font-weight: @weight;
 		font-style: @style;
 	}

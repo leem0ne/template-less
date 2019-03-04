@@ -15,8 +15,8 @@ var gulp 					= require('gulp'),
 require('events').EventEmitter.defaultMaxListeners = 0;
 
 var options = {
-	folder: 'homyroom',
-	sprite: 'check',
+	folder: 'instaconstructor',
+	sprite: 'steps',
 };
 
 gulp.task('default', ['less', 'pug'], function(){
@@ -98,7 +98,9 @@ gulp.task('jsmin', function() {
 			// 'node_modules/imagesloaded/imagesloaded.pkgd.min.js',
 			// 'node_modules/popper.js/dist/umd/popper.min.js',
 			// 'node_modules/tooltip.js/dist/umd/tooltip.min.js',
-			'node_modules/js-custom-scroll/dist/js-custom-scroll.min.js',
+			// 'node_modules/js-custom-scroll/dist/js-custom-scroll.min.js',
+			// 'node_modules/vanilla-lazyload/dist/lazyload.min.js',
+			'node_modules/jquery-touchswipe/jquery.touchSwipe.min.js',
 			'../'+ options.folder +'/build/assets/libs/**/*.js',
 		])
     .pipe(concat('libs.min.js'))
@@ -111,7 +113,7 @@ gulp.task('cssmin', function() {
   		'node_modules/magnific-popup/dist/magnific-popup.css',
   		// 'node_modules/swiper/dist/css/swiper.min.css',
   		// 'node_modules/animate.css/animate.min.css',
-			'node_modules/js-custom-scroll/dist/js-custom-scroll.css',
+			// 'node_modules/js-custom-scroll/dist/js-custom-scroll.css',
   		'../'+ options.folder +'/build/assets/libs/**/*.css'
   	])
     .pipe(concat('libs.min.css'))

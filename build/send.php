@@ -1,4 +1,4 @@
-<?php
+<?php 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
@@ -11,7 +11,7 @@ require 'PHPMailer/PHPMailer.php';
 $userData = filter_input_array(INPUT_POST, [
     'name' => FILTER_SANITIZE_STRING,
     'phone' => [
-                    'filter' => FILTER_VALIDATE_REGEXP,
+                    'filter' => FILTER_VALIDATE_REGEXP, 
                     'options' => [
                             'regexp' => '/^[0-9\s\(\)\+\-]{1,18}$/'//email /[0-9a-z_\-]+@[0-9a-z_^\.]+\.[a-z]{2,3}/i
                     ]
@@ -34,7 +34,7 @@ $titleData = [
 
 $response = [];     // Возвращаемый массив ответов по ajax - инициализируем
 $message = '';      // html - сообщение для письма - инициализация
-$responseError = [  // коды ответов для js
+$responseError = [  // коды ответов для js 
     100 => [
         'code' => 100,
         'text' => 'сообщение отправлено'
@@ -57,7 +57,7 @@ $responseError = [  // коды ответов для js
     ],
 ];
 
-
+     
 /*  Проверяем правильность ввода email */
 if ( !$userData['phone'] ) {
     $response = $responseError[104];    //неправильный телефон
@@ -65,24 +65,27 @@ if ( !$userData['phone'] ) {
 
     /* Формируем сообщение */
     // $message = "<p>Имя: ".$userData['name']."<br>Телефон: ".$userData['phone']."<br>Email: ".$userData['email']."</p><p>Заполнена форма: ".$userData['title']."</p>";
-    foreach ($userData as $key => $value) {
-        switch ($key) {
-            case 'array':
-                $message .= '<p>'. $titleData[$key];
-                if (is_array($userData[$key]))
-                    $message .= '<br> - '. implode(';<br> - ', $userData[$key] );
-                $message .= '.</p>';
-                break;
-            default:
-                $message .= '<p>'. $titleData[$key] .': '. $value .'</p>';
+    $message .= '<table>';
+    foreach ($titleData as $key => $value) {
+
+        $message .= '<tr>';
+        $message .= '<td style="vertical-align: top;padding: 5px 20px 10px 0;border-bottom: 1px solid #ddd">'. $value . '</td>';
+        $message .= '<td style="vertical-align: top;padding: 5px 20px 10px 0;border-bottom: 1px solid #ddd">';
+
+        if (is_array($userData[$key])) {
+            $message .= '- '. implode(';<br>- ', $userData[$key] );
+        } else {
+            $message .= $userData[$key];
         }
-
+        
+        $message .= '</td></tr>';
     }
-
+    $message .= '</table>';
+ 
 
     $mail = new PHPMailer;
 
-    $mail->setFrom('info@leem-one.ru', 'tmp');
+    $mail->setFrom('info@leem-one.ru', '');
     $mail->addAddress('irbisant@mail.ru');
 
     $mail->isHTML(true);
@@ -97,7 +100,7 @@ if ( !$userData['phone'] ) {
         $mail->AddAttachment($_FILES['fileupload']['tmp_name'], $_FILES['fileupload']['name']);
     }
 
-    /* Отправка сообщения */
+    /* Отправка сообщения */         
     if  ( $mail->send() ){
         $response = $responseError[100];  //сообщение отправлено
     }else{
