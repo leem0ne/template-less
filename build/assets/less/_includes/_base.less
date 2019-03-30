@@ -32,6 +32,7 @@ img{
 }
 a{
   color: inherit;
+  outline: none;
 
   &[role=button]{
     cursor: pointer;
@@ -155,3 +156,13 @@ strong{
     margin-bottom: 4px;
   }
 }
+
+.lazyload{
+  opacity: 1;
+  transition: opacity 0.3s;
+
+  &[data-src] {
+    opacity: 0;
+  }
+}
+

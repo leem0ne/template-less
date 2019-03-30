@@ -15,8 +15,8 @@ var gulp 					= require('gulp'),
 require('events').EventEmitter.defaultMaxListeners = 0;
 
 var options = {
-	folder: 'instaconstructor',
-	sprite: 'steps',
+	folder: 'samokaty',
+	sprite: 'bullets',
 };
 
 gulp.task('default', ['less', 'pug'], function(){
@@ -91,16 +91,15 @@ gulp.task('imagesprite', function () {
 gulp.task('jsmin', function() {
   return gulp.src([
   		'node_modules/jquery/dist/jquery.min.js',
-			'node_modules/slick-carousel/slick/slick.min.js',
+			// 'node_modules/slick-carousel/slick/slick.min.js',
 			// 'node_modules/swiper/dist/js/swiper.min.js',
 			'node_modules/magnific-popup/dist/jquery.magnific-popup.min.js',
-			// 'node_modules/wow.js/dist/wow.min.js',
+			'node_modules/wow.js/dist/wow.min.js',
 			// 'node_modules/imagesloaded/imagesloaded.pkgd.min.js',
 			// 'node_modules/popper.js/dist/umd/popper.min.js',
 			// 'node_modules/tooltip.js/dist/umd/tooltip.min.js',
 			// 'node_modules/js-custom-scroll/dist/js-custom-scroll.min.js',
 			// 'node_modules/vanilla-lazyload/dist/lazyload.min.js',
-			'node_modules/jquery-touchswipe/jquery.touchSwipe.min.js',
 			'../'+ options.folder +'/build/assets/libs/**/*.js',
 		])
     .pipe(concat('libs.min.js'))

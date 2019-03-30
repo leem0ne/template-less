@@ -30,6 +30,14 @@
   });
 }
 
+//for retina
+.retina(@rules){
+	@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+		@rules();
+	}
+}
+
+
 .lg(@rules) {
   @media screen and (max-width: @w-lg) { @rules(); }
 }

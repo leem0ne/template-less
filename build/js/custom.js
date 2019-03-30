@@ -1,9 +1,8 @@
-svg4everybody();//show svg-sprites in IE
 
 //MATCH MEDIA POINTS
 function isMatchMediaArr(arr) {
   if ( !Array.isArray(arr) ) return [];
-  var res = [];
+  var res = {};
   arr.forEach(function(el, i) {
     res[el] =  window.matchMedia('(min-width:'+parseInt(el, 10)+'px)').matches;
   });
@@ -12,7 +11,25 @@ function isMatchMediaArr(arr) {
 var matchMediaArr = isMatchMediaArr([430, 560, 780, 990, 1250]);
 console.log(matchMediaArr);
 
+
 $(document).ready(function(){
+
+	svg4everybody();//supports svg-sprites in IE/edge
+
+	//ленивая загрузка изображений https://davidwalsh.name/lazyload-image-fade
+	//используется для изображений в слайдерах, чтобы слайдеры при инициализации правльно расчитывали размеры
+	[].forEach.call(document.querySelectorAll('.lazyload'), function(img) {
+	  img.setAttribute('src', img.getAttribute('data-src'));
+	  img.onload = function() {
+			img.removeAttribute('data-src');
+	  };
+	});
+
+	//ленивая загрузка с viewport-ом   https://github.com/verlok/lazyload
+	var lazyLoadInstance = new LazyLoad({
+	    elements_selector: ".lazy"
+	});
+
 
 	//scroll menu
 	$('.nav__link').click( function(){
@@ -37,6 +54,14 @@ $(document).ready(function(){
 	$('.phone__btn').magnificPopup({
 		type: 'inline',
 		closeBtnInside: true,
+		callbacks: {
+    open: function() {
+    	$('body').addClass('modal-open');
+    },
+    close: function() {
+    	$('body').removeClass('modal-open');
+    }
+  }
 	}).on('click', function(){
 		var title = $(this).data('title') ? $(this).data('title') : $(this).text();
 		$('#modal-call').find('.form__desc').text( title );
@@ -109,8 +134,16 @@ $(document).ready(function(){
 						    src: '#modal-thanks',
 						},
 						type: 'inline',
-					    closeBtnInside: true,
-					    showCloseBtn: true,
+				    closeBtnInside: true,
+				    showCloseBtn: true,
+						callbacks: {
+					    open: function() {
+					    	$('body').addClass('modal-open');
+					    },
+					    close: function() {
+					    	$('body').removeClass('modal-open');
+					    }
+					  }
 					});
 					setTimeout(function(){ $.magnificPopup.close(); }, 5000);
 				};
