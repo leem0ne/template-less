@@ -1,15 +1,27 @@
-
 //MATCH MEDIA POINTS
 function isMatchMediaArr(arr) {
-  if ( !Array.isArray(arr) ) return [];
+  if ( !Array.isArray(arr) ) return {};
   var res = {};
   arr.forEach(function(el, i) {
-    res[el] =  window.matchMedia('(min-width:'+parseInt(el, 10)+'px)').matches;
+    res[el] = {
+    	min: window.matchMedia('(min-width:'+parseInt(el, 10)+'px)').matches,
+    	max: window.matchMedia('(max-width:'+parseInt(el, 10)+'px)').matches
+    }
   });
   return res;
 } 
 var matchMediaArr = isMatchMediaArr([430, 560, 780, 990, 1250]);
-console.log(matchMediaArr);
+// console.log(matchMediaArr);
+
+
+function scrollTo(scroll_el, speed, offset){
+	let speed = speed || 800,
+			offset = offset || 0;
+
+	if ($(scroll_el).length != 0) {
+		$('html, body').animate({ scrollTop: $(scroll_el).offset().top + offset }, speed);
+	}
+}
 
 
 $(document).ready(function(){
@@ -26,47 +38,56 @@ $(document).ready(function(){
 	});
 
 	//ленивая загрузка с viewport-ом   https://github.com/verlok/lazyload
-	var lazyLoadInstance = new LazyLoad({
-	    elements_selector: ".lazy"
+	// var lazyLoadInstance = new LazyLoad({
+	//     elements_selector: ".lazy"
+	// });
+
+
+	//FIX_MENU
+	const winH = $(window).height(),
+				fixMenu = $('#fix-menu');
+	$(window).on('load scroll', function() {
+		var top = $(this).scrollTop();
+		if ( top > ( winH / 3 ) ) {
+			$(fixMenu).addClass('fix-menu_show');
+		} else {
+			$(fixMenu).removeClass('fix-menu_show');
+		}
 	});
 
+	$('.burger').on('click', function() {
+		if ( $(this).hasClass('burger_active') ) {
+			$(this).removeClass('burger_active');
+			$(fixMenu).removeClass('fix-menu_show');
+		} else {
+			$(this).addClass('burger_active');
+			$(fixMenu).addClass('fix-menu_show');
+		}
+	});
 
 	//scroll menu
 	$('.nav__link').click( function(){
-		var scroll_el = $(this).attr('href');
-		if ($(scroll_el).length != 0) {
-			$('html, body').animate({ scrollTop: $(scroll_el).offset().top }, 800);
-		}
+		var href = $(this).attr('href');
+		scrollTo(href);
 		if ( $('.toggle').is(':visible') )
 			$('#top-menu').css('display', '');
 		return false;
 	});
 
-	$('.toggle').on('click', function() {
-		if ( $('#top-menu').is(':visible') ) {
-			$('#top-menu').css('display', '');
-		} else {
-			$('#top-menu').css('display', 'block');
-		}
+
+	//POPUP LITY
+	// документация https://sorgalla.com/lity/
+	let modalLity;
+	$('.catalog__popup, .keyses__btn').on('click', function(event) {
+		event.preventDefault();
+
+		const href = $(this).attr('href');
+		modalLity = lity(href);
 	});
 
-	//magnificPopup
-	$('.phone__btn').magnificPopup({
-		type: 'inline',
-		closeBtnInside: true,
-		callbacks: {
-    open: function() {
-    	$('body').addClass('modal-open');
-    },
-    close: function() {
-    	$('body').removeClass('modal-open');
-    }
-  }
-	}).on('click', function(){
-		var title = $(this).data('title') ? $(this).data('title') : $(this).text();
-		$('#modal-call').find('.form__desc').text( title );
-		$('#modal-call').find('input[name=title]').val( title );
-	});
+	// modalLity = lity('#modal-thanks');
+	// setTimeout(function(){ modalLity.close(); console.log('sdf')}, 10000);
+
 
 	//slider slick
 	var sliderWrap = $('#slider'),
@@ -80,11 +101,12 @@ $(document).ready(function(){
 	});
 
 	$(slider).slick({
-	    prevArrow: '#arrows-prev',
-	    nextArrow: '#arrows-next',
+	    prevArrow: $(sliderWrap).find('.slider__arrow_prev'),
+	    nextArrow: $(sliderWrap).find('.slider__arrow_next'),
 	    centerMode: true,
 	    centerPadding: '0',
 	    slidesToShow: 3,
+	    mobileFirst: true,
 	    responsive: [
 	      {
 	        breakpoint: 780,
@@ -97,6 +119,87 @@ $(document).ready(function(){
 	      }
 	    ]
 	});
+
+
+	/**
+	*  инициализация слайдера Slick Slider с отображением панели текущегослайда / количество слайдов
+	*  wrapper - оболочка элементов слайдера
+	*  options - настройки SLICK slider
+
+	*  Зависимости jQuery, Slick Slider
+	**/
+	function initMySlider(wrapper, options) {
+		const slider = $(wrapper).find('.slider__wrap');//оболочка элементов слайдера
+		const slides = $(slider).children('div');//слайды
+		const prev = $(wrapper).find('.slider__arrow_prev');//Кнопка Назад
+		const next = $(wrapper).find('.slider__arrow_next');//Кнопка Вперед
+		const curr = $(wrapper).find('.slider__curr');//Блок номера текущего слайда
+		const count = $(wrapper).find('.slider__count');//Блок количества слайдов
+
+		let countSlides = slides.length;//количество слайдов
+
+
+		//Инициализация слайдера
+		const slickInit = function() {
+
+			if ( options.arrows == undefined || options.arrows == true ) {
+				options.prevArrow = prev;
+				options.nextArrow = next;
+			}
+
+			$(slider).slick(options);
+		}
+
+
+		//инициализация объекта
+		const init = function(){
+			slickInit();
+		}
+		$('/').hover(function() {
+			/* Stuff to do when the mouse enters the element */
+		}, function() {
+			/* Stuff to do when the mouse leaves the element */
+		});
+
+
+		//инициализация инфо табло
+		//двузначные числа
+		this.infoTable = function(isDouble){
+			if (isDouble) 
+			{
+				if ( countSlides < 10 ) countSlides = '0'+countSlides;
+
+				$(curr).text('01');
+
+				$(slider).on('afterChange', function(slick, currentSlide) {
+					let current = currentSlide.currentSlide+1;
+					if ( current < 10 ) current = '0'+current;
+					$(curr).text( current );
+				});
+			}
+			else
+			{
+				$(curr).text(1);
+
+				$(slider).on('afterChange', function(slick, currentSlide) {
+					let current = currentSlide.currentSlide+1;
+					$(curr).text( current );
+				});
+			}
+
+
+			$(count).text( countSlides );
+		}
+
+
+		this.unSlider = function() {
+			$(slider).slick('unslick');
+		}
+
+
+		init();
+	}
+
 
 	//Отправка заявок
 	$('input[name="agree"]').on('click', function() {
@@ -128,24 +231,10 @@ $(document).ready(function(){
 				if (data == "100"){
 					$(form).find('input[type=text]').val('');
 					$(form).find('input[type=tel]').val('');
-					$.magnificPopup.close();
-					$.magnificPopup.open({
-						items: {
-						    src: '#modal-thanks',
-						},
-						type: 'inline',
-				    closeBtnInside: true,
-				    showCloseBtn: true,
-						callbacks: {
-					    open: function() {
-					    	$('body').addClass('modal-open');
-					    },
-					    close: function() {
-					    	$('body').removeClass('modal-open');
-					    }
-					  }
-					});
-					setTimeout(function(){ $.magnificPopup.close(); }, 5000);
+
+					if (modalLity) modalLity.close();
+					modalLity = lity('#modal-thanks');
+					setTimeout(function(){ modalLity.close(); }, 5000);
 				};
 				if (data == "101"){
 					$(form).find('input[type=text]').val('');

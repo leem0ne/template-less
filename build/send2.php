@@ -1,40 +1,33 @@
 <?php 
 require_once 'PHPMailer/Exception.php';
 require_once 'PHPMailer/PHPMailer.php';
+require_once 'vendor/validatePostData/ValidatePostData.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+use validatePostData\ValidatePostData;
 
 
 //  ПОДГОТОВИТЕЛЬНЫЕ ДАННЫЕ
 //  Массив получаемый от формы
-$userData = filter_input_array(INPUT_POST, [
-    'name' => FILTER_SANITIZE_STRING,
-    'phone' => [
-                    'filter' => FILTER_VALIDATE_REGEXP, 
-                    'options' => [
-                            'regexp' => '/^[0-9\s\(\)\+\-]{1,18}$/'//email /[0-9a-z_\-]+@[0-9a-z_^\.]+\.[a-z]{2,3}/i
-                    ]
-                ],
-    'title' => FILTER_SANITIZE_STRING,
-    'orderfk' => FILTER_SANITIZE_STRING,
-    'array' => [
-                    'filter' => FILTER_SANITIZE_STRING,
-                    'flags'  => FILTER_REQUIRE_ARRAY,
-                ]
-]);
-// Заголовки для сообщения (ключи совпадают с ключами массива $userData)
-$titleData = [
-    'name' => 'Имя',
-    'phone' => 'Телефон',
-    'title' => 'Заполнена форма',
-    'array' => 'Какой-то заголовок',
-];
+$userData = new ValidatePostData();
 
-if ( !empty($userData['orderfk']) ) die();
+/**
+ *  метод add принимает три параметра
+ *  1 - название ключа в массиве POST
+ *  2 - человекопонятный заголовок ключа
+ *  3 - фильтр для валидации, по - умолчанию строки, варианты 'phone', 'email', 'array'
+ */
+$userData->add('name', 'Имя');
+$userData->add('phone', 'Телефон', 'phone');
+$userData->add('email', 'Email', 'email');
+$userData->add('title', 'Заполнена форма');
+$userData->add('array', 'Какой-то заголовок', 'array');
+$userData->add('orderfk', 'Пустота');
+
+if ( !empty($userData->get('orderfk')['value']) ) die();
 
 $response = [];     // Возвращаемый массив ответов по ajax - инициализируем
-$message = '';      // html - сообщение для письма - инициализация
 $responseError = [  // коды ответов для js 
     100 => [
         'code' => 100,
@@ -59,25 +52,26 @@ $responseError = [  // коды ответов для js
 ];
 
      
-/*  Проверяем правильность ввода email */
-if ( !$userData['phone'] ) {
+/*  Проверяем правильность ввода телефона */
+if ( !$userData->get('phone')['value'] ) {
     $response = $responseError[104];    //неправильный телефон
 } else {
 
     /* Формируем сообщение */
-    $message .= '<table>';
-    foreach ($titleData as $key => $value) {
+    $message = '<table>';
+    $tdStyle = 'vertical-align: top;padding: 10px 20px 5px 0;border-bottom: 1px solid #ddd';
+    foreach ($userData->getAll() as $input) {
 
-        if ( empty($userData[$key]) ) continue;
+        if ( empty($input['value']) ) continue;
 
         $message .= '<tr>';
-        $message .= '<td style="vertical-align: top;padding: 10px 20px 5px 0;border-bottom: 1px solid #ddd">'. $value . '</td>';
-        $message .= '<td style="vertical-align: top;padding: 10px 20px 5px 0;border-bottom: 1px solid #ddd">';
+        $message .= '<td style="'.$tdStyle.'">'. $input['title'] . '</td>';
+        $message .= '<td style="'.$tdStyle.'">';
 
-        if (is_array($userData[$key])) {
-            $message .= '- '. implode(';<br>- ', $userData[$key] );
+        if (is_array($input['value'])) {
+            $message .= '- '. implode(';<br>- ', $input['value'] );
         } else {
-            $message .= $userData[$key];
+            $message .= $input['value'];
         }
         
         $message .= '</td></tr>';

@@ -10,13 +10,15 @@ var gulp 					= require('gulp'),
 	gcmq 						= require('gulp-group-css-media-queries'),
 	pug 						= require('gulp-pug'),
 	cleanCSS 				= require('gulp-clean-css'),
-	notify 					= require("gulp-notify");
+	notify 					= require("gulp-notify"),
+	sourcemaps 			= require('gulp-sourcemaps');
 
 require('events').EventEmitter.defaultMaxListeners = 0;
 
 var options = {
-	folder: 'samokaty',
-	sprite: 'bullets',
+	// folder: 'opti',
+	folder: 'teleport-simulators',
+	sprite: 'select',
 };
 
 gulp.task('default', ['less', 'pug'], function(){
@@ -25,8 +27,9 @@ gulp.task('default', ['less', 'pug'], function(){
 
 gulp.task('less', function(){
 	return gulp.src([
+				// '../'+ options.folder +'/build/less/bootstrap.less',
 				'../'+ options.folder +'/build/assets/less/*.less',
-				// '../'+ options.folder +'/build/assets/less/catalog.less',
+				// '../'+ options.folder +'/build/assets/less/pages.less',
 				// '../'+ options.folder +'/build/assets/less/simple.less',
 				// '../'+ options.folder +'/build/assets/less/all-styles.less',
 			])
@@ -38,12 +41,17 @@ gulp.task('less', function(){
 		.pipe(gcmq())
 		.pipe(autoprefixer(['last 10 versions', '> 1%', 'ie 8'], {cascade: true}))
 		.pipe(cleanCSS({compatibility: 'ie8', format: 'keep-breaks'}))
-		.pipe(gulp.dest('../'+ options.folder +'/build/css'))
+		.pipe(gulp.dest('../'+ options.folder +'/build'))
 		.pipe(browserSync.reload({ stream: true }));
 });
 
 gulp.task('pug', function(){
-	return gulp.src('../'+ options.folder +'/build/assets/*.pug')
+	return gulp.src([
+			// '../'+ options.folder +'/build/assets/shop.pug',
+			// '../'+ options.folder +'/build/assets/card.pug',
+			// '../'+ options.folder +'/build/assets/card-2.pug',
+			'../'+ options.folder +'/build/assets/*.pug',
+		])
 		.pipe(pug({
 			pretty: true
 		}))
@@ -90,16 +98,18 @@ gulp.task('imagesprite', function () {
 
 gulp.task('jsmin', function() {
   return gulp.src([
-  		'node_modules/jquery/dist/jquery.min.js',
-			// 'node_modules/slick-carousel/slick/slick.min.js',
+  		// 'node_modules/jquery/dist/jquery.min.js',
+			'node_modules/slick-carousel/slick/slick.min.js',
 			// 'node_modules/swiper/dist/js/swiper.min.js',
-			'node_modules/magnific-popup/dist/jquery.magnific-popup.min.js',
-			'node_modules/wow.js/dist/wow.min.js',
-			// 'node_modules/imagesloaded/imagesloaded.pkgd.min.js',
+			// 'node_modules/magnific-popup/dist/jquery.magnific-popup.min.js',
+			// 'node_modules/wow.js/dist/wow.min.js',
+			'node_modules/imagesloaded/imagesloaded.pkgd.min.js',
 			// 'node_modules/popper.js/dist/umd/popper.min.js',
 			// 'node_modules/tooltip.js/dist/umd/tooltip.min.js',
 			// 'node_modules/js-custom-scroll/dist/js-custom-scroll.min.js',
+			// 'node_modules/sticky-js/dist/sticky.min.js',
 			// 'node_modules/vanilla-lazyload/dist/lazyload.min.js',
+			'node_modules/lity/dist/lity.min.js',
 			'../'+ options.folder +'/build/assets/libs/**/*.js',
 		])
     .pipe(concat('libs.min.js'))
@@ -109,7 +119,9 @@ gulp.task('jsmin', function() {
 
 gulp.task('cssmin', function() {
   return gulp.src([
-  		'node_modules/magnific-popup/dist/magnific-popup.css',
+  		// 'node_modules/magnific-popup/dist/magnific-popup.css',
+  		'node_modules/lity/dist/lity.min.css',
+  		// 'node_modules/normalize.css/normalize.css',
   		// 'node_modules/swiper/dist/css/swiper.min.css',
   		// 'node_modules/animate.css/animate.min.css',
 			// 'node_modules/js-custom-scroll/dist/js-custom-scroll.css',
@@ -127,10 +139,11 @@ gulp.task('watch', ['pug', 'less', 'browser-sync'], function(){
 	gulp.watch('../'+ options.folder +'/build/js/*.js', browserSync.reload);
 });
 
-gulp.task('watch-small', ['less', 'browser-sync'], function(){
+gulp.task('watch-less', ['less', 'browser-sync'], function(){
 	gulp.watch('../'+ options.folder +'/build/assets/less/**/*.less', ['less']);
+	// gulp.watch('../'+ options.folder +'/build/assets/less/**/*.less', ['less']);
 	gulp.watch('../'+ options.folder +'/build/*.html', browserSync.reload);
-	gulp.watch('../'+ options.folder +'/build/**/*.js', browserSync.reload);
+	gulp.watch('../'+ options.folder +'/build/js/*.js', browserSync.reload);
 });
 
 

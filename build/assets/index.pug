@@ -8,6 +8,7 @@ html(lang="ru")
 		meta(name="description", content="")
 		meta(name="viewport" content="width=device-width, initial-scale=1.0")
 		meta(name="format-detection" content="telephone=no")
+		meta(name="robots" content="nofollow,noindex")
 		link(rel="shortcut icon" href="img/favicon.png" type="image/png")
 		
 		//[if IE]> <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script> <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script> <![endif]
@@ -86,6 +87,7 @@ html(lang="ru")
 					.form__box-submit
 						button.btn1.form__submit(type="submit" name="submit") Отправить
 						input(type="hidden" name="title" value="Заказать звонок")
+						input(type="hidden" name="orderfk" value="")
 					.form__box-checkbox
 						input.form__checkbox(type="checkbox" name="agree" checked id="agree-1")
 						label.form__label-checkbox(for="agree-1") Отправляя заявку вы соглашаетесь с 
