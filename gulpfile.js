@@ -1,196 +1,188 @@
-var gulp 					= require('gulp'),
-	less 						= require('gulp-less'),
-	browserSync 		= require('browser-sync'),
-	autoprefixer 		= require('gulp-autoprefixer'),
-	imagemin				= require('gulp-imagemin'),
-	concat					= require('gulp-concat'),
-	uglify 					= require('gulp-uglify'),
-	csso 						= require('gulp-csso'),
-	spritesmith			= require('gulp.spritesmith'),
-	gcmq 						= require('gulp-group-css-media-queries'),
-	pug 						= require('gulp-pug'),
-	cleanCSS 				= require('gulp-clean-css'),
-	notify 					= require("gulp-notify"),
-	sourcemaps 			= require('gulp-sourcemaps');
+const { src, dest, parallel, series, watch } = require('gulp');
+const pug             = require('gulp-pug');
+const less            = require('gulp-less');
+const browserSync     = require('browser-sync');
+const autoprefixer    = require('gulp-autoprefixer');
+const imagemin        = require('gulp-imagemin');
+const concat          = require('gulp-concat');
+const uglify          = require('gulp-uglify');
+const csso            = require('gulp-csso');
+const spritesmith     = require('gulp.spritesmith');
+const gcmq            = require('gulp-group-css-media-queries');
+const cleanCSS        = require('gulp-clean-css');
+const notify          = require("gulp-notify");
+const sourcemaps      = require('gulp-sourcemaps');
+const rename          = require('gulp-rename');
 
-require('events').EventEmitter.defaultMaxListeners = 0;
 
-var options = {
-	// folder: 'opti',
-	folder: 'teleport-simulators',
-	sprite: 'select',
+
+const options = {
+  folder: './build',
+  // folder: './public/wp-content/themes/homyroom',
+  sprite: 'numbers',
 };
 
-gulp.task('default', ['less', 'pug'], function(){
-	//return true;
-});
+const pathToProject = options.folder;
 
-gulp.task('less', function(){
-	return gulp.src([
-				// '../'+ options.folder +'/build/less/bootstrap.less',
-				'../'+ options.folder +'/build/assets/less/*.less',
-				// '../'+ options.folder +'/build/assets/less/pages.less',
-				// '../'+ options.folder +'/build/assets/less/simple.less',
-				// '../'+ options.folder +'/build/assets/less/all-styles.less',
-			])
-		.pipe(less())
-		.on("error", notify.onError({
-			message: "Less-Error: <%= error.message %>",
-			title: "Less"
-		}))
-		.pipe(gcmq())
-		.pipe(autoprefixer(['last 10 versions', '> 1%', 'ie 8'], {cascade: true}))
-		.pipe(cleanCSS({compatibility: 'ie8', format: 'keep-breaks'}))
-		.pipe(gulp.dest('../'+ options.folder +'/build'))
-		.pipe(browserSync.reload({ stream: true }));
-});
 
-gulp.task('pug', function(){
-	return gulp.src([
-			// '../'+ options.folder +'/build/assets/shop.pug',
-			// '../'+ options.folder +'/build/assets/card.pug',
-			// '../'+ options.folder +'/build/assets/card-2.pug',
-			'../'+ options.folder +'/build/assets/*.pug',
-		])
-		.pipe(pug({
-			pretty: true
-		}))
-		.on("error", notify.onError({
-			message: "Pug-Error: <%= error.message %>",
-			title: "Pug"
-		}))
-		.pipe(gulp.dest('../'+ options.folder +'/build'))
-		.pipe(browserSync.reload({ stream: true }));
-});
+//  PUG -> HTML
+function html() {
+  return src(pathToProject+'/assets/*.pug')
+    .pipe(pug({
+      pretty: true
+    }))
+    .on("error", notify.onError({
+      message: "Pug-Error: <%= error.message %>",
+      title: "Pug"
+    }))
+    .pipe(dest(pathToProject))
+    // .pipe(browserSync.reload({ stream: true }));
+    .on('end', browserSync.reload);
+}
 
-gulp.task('browser-sync', function(){
-	browserSync({
-		server: {
-			baseDir: '../'+ options.folder +'/',
-		},
-		notify: false
-	});
-});
 
-gulp.task('imagemin', function(){
-	return gulp.src('../'+ options.folder +'/build/img/**/*')
-		.pipe(imagemin({
-			interlaced: true,
-		    progressive: true,
-		    optimizationLevel: 5,
-		    svgoPlugins: [{removeViewBox: true}]
-		}))
-		.pipe(gulp.dest('../'+ options.folder +'/build/img/'));
-});
+//  LESS -> CSS
+function css() {
+  return src(pathToProject +'/assets/less/*.less')
+    .pipe(sourcemaps.init())
+      .pipe(less())
+      .on("error", notify.onError({
+        message: "Less-Error: <%= error.message %>",
+        title: "Less"
+      }))
+      .pipe(autoprefixer(['last 3 versions', '> 1%', 'ie 10'], {cascade: true}))
+    .pipe(sourcemaps.write('./'))
+    .pipe(dest(pathToProject +'/css'))
+    .pipe(browserSync.reload({ stream: true }));
+}
 
-gulp.task('imagesprite', function () {
-  return gulp.src('../'+ options.folder +'/build/img/' + options.sprite + '/*.png')
-  	.pipe(spritesmith({
-  		algorithms: 'binary-tree',
-	    imgName: options.sprite + '.png',
-	    cssFormat: 'css',
-	    cssName: options.sprite + '.css',
-	    imgPath: '../img/' + options.sprite + '.png',
-	    padding: 10,
-	  }))
-	  .pipe(gulp.dest('../'+ options.folder +'/build/img/'));
-});
 
-gulp.task('jsmin', function() {
-  return gulp.src([
-  		// 'node_modules/jquery/dist/jquery.min.js',
-			'node_modules/slick-carousel/slick/slick.min.js',
-			// 'node_modules/swiper/dist/js/swiper.min.js',
-			// 'node_modules/magnific-popup/dist/jquery.magnific-popup.min.js',
-			// 'node_modules/wow.js/dist/wow.min.js',
-			'node_modules/imagesloaded/imagesloaded.pkgd.min.js',
-			// 'node_modules/popper.js/dist/umd/popper.min.js',
-			// 'node_modules/tooltip.js/dist/umd/tooltip.min.js',
-			// 'node_modules/js-custom-scroll/dist/js-custom-scroll.min.js',
-			// 'node_modules/sticky-js/dist/sticky.min.js',
-			// 'node_modules/vanilla-lazyload/dist/lazyload.min.js',
-			'node_modules/lity/dist/lity.min.js',
-			'../'+ options.folder +'/build/assets/libs/**/*.js',
-		])
+//  COMPRESS style.css
+function cssmin(){
+  return src(pathToProject +'/css/style.css')
+    .pipe(less())
+    .on("error", notify.onError({
+      message: "Less-Error: <%= error.message %>",
+      title: "Less"
+    }))
+    .pipe(autoprefixer(['last 3 versions', '> 1%', 'ie 10'], {cascade: true}))
+    .pipe(gcmq())
+    .pipe(cleanCSS({compatibility: 'ie10', format: 'keep-breaks'}))
+    // .pipe(csso())
+    // .pipe(rename('style.min.css'))
+    .pipe(dest(pathToProject +'/css'));
+}
+
+
+//  BROWSER-SYNC
+function browserS(){
+  browserSync({
+    server: {
+      baseDir: pathToProject,
+    },
+    notify: false
+  });
+}
+
+
+//  BUILDING libs.min.js
+function jslibs() {
+  return src([
+      'node_modules/jquery/dist/jquery.min.js',
+      'node_modules/slick-carousel/slick/slick.min.js',
+      'node_modules/lity/dist/lity.min.js',
+      // 'node_modules/imagesloaded/imagesloaded.pkgd.min.js',
+      'node_modules/vanilla-lazyload/dist/lazyload.min.js',
+      pathToProject +'/assets/libs/**/*.js',
+    ])
     .pipe(concat('libs.min.js'))
     .pipe(uglify())
-    .pipe(gulp.dest('../'+ options.folder +'/build/js'));
-});
+    .pipe(dest(pathToProject +'/js'));
+}
 
-gulp.task('cssmin', function() {
-  return gulp.src([
-  		// 'node_modules/magnific-popup/dist/magnific-popup.css',
-  		'node_modules/lity/dist/lity.min.css',
-  		// 'node_modules/normalize.css/normalize.css',
-  		// 'node_modules/swiper/dist/css/swiper.min.css',
-  		// 'node_modules/animate.css/animate.min.css',
-			// 'node_modules/js-custom-scroll/dist/js-custom-scroll.css',
-  		'../'+ options.folder +'/build/assets/libs/**/*.css'
-  	])
+
+//  BUILDING libs.min.css
+function csslibs(){
+  return src([
+      'node_modules/lity/dist/lity.min.css',
+      pathToProject +'/assets/libs/**/*.css',
+    ])
     .pipe(concat('libs.min.css'))
     .pipe(csso())
-    .pipe(gulp.dest('../'+ options.folder +'/build/css'));
-});
-
-gulp.task('watch', ['pug', 'less', 'browser-sync'], function(){
-	gulp.watch('../'+ options.folder +'/build/assets/less/**/*.less', ['less']);
-	gulp.watch('../'+ options.folder +'/build/assets/**/*.pug', ['pug']);
-	//gulp.watch('./build/*.html', browserSync.reload);
-	gulp.watch('../'+ options.folder +'/build/js/*.js', browserSync.reload);
-});
-
-gulp.task('watch-less', ['less', 'browser-sync'], function(){
-	gulp.watch('../'+ options.folder +'/build/assets/less/**/*.less', ['less']);
-	// gulp.watch('../'+ options.folder +'/build/assets/less/**/*.less', ['less']);
-	gulp.watch('../'+ options.folder +'/build/*.html', browserSync.reload);
-	gulp.watch('../'+ options.folder +'/build/js/*.js', browserSync.reload);
-});
+    .pipe(dest(pathToProject +'/css'));
+}
 
 
+//  COMPRESS images
+function imageMin(){
+  src(pathToProject +'/img/**/sprite.svg' )
+    .pipe(dest(pathToProject +'/imgmin/svg'));
 
-var smartgrid = require('smart-grid');
+  return src(pathToProject +'/img/**/*', {ignore: '/**/sprite.svg'} )
+    .pipe(imagemin({
+      interlaced: true,
+        progressive: true,
+        optimizationLevel: 5,
+        // svgoPlugins: [{removeViewBox: true}]
+    }))
+    .pipe(dest(pathToProject +'/imgmin/'));
+}
 
-/* It's principal settings in smart grid project */
-var settings = {
-    outputStyle: 'less', /* less || scss || sass || styl */
-    columns: 12, /* number of grid columns */
-    offset: "30px", /* gutter width px || % */
-    container: {
-        maxWidth: '1170px', /* max-width оn very large screen */
-        fields: '15px' /* side fields */
-    },
-    breakPoints: {
-        lg: {
-            'width': '1170px', /* -> @media (max-width: 1100px) */
-            'fields': '15px' /* side fields */
-        },
-        md: {
-            'width': '960px',
-            'fields': '15px'
-        },
-        sm: {
-            'width': '780px',
-            'fields': '15px'
-        },
-        xs: {
-            'width': '560px',
-            'fields': '15px'
-        },
-        xxs: {
-            'width': '425px',
-            'fields': '15px'
-        }
-        /*
-        We can create any quantity of break points.
-
-        some_name: {
-            some_width: 'Npx',
-            some_offset: 'N(px|%)'
-        }
-        */
-    }
+function imagesprite() {
+  return src(pathToProject +'/img/' + options.sprite + '/*.png')
+    .pipe(spritesmith({
+      algorithms: 'binary-tree',
+      imgName: options.sprite + '.png',
+      cssFormat: 'css',
+      cssName: options.sprite + '.css',
+      imgPath: '../img/' + options.sprite + '.png',
+      padding: 10,
+    }))
+    .pipe(dest(pathToProject +'/img/'));
 };
 
-gulp.task('smartgrid', function() {
-  return smartgrid('../'+ options.folder +'/build/assets/less', settings);
-});
+
+//  WATCHING files
+// function watches(){
+  // csslibs();
+  // jslibs();
+
+  watch(pathToProject+'/assets/less/**/*.less', css);
+  watch(pathToProject+'/assets/**/*.pug', html);
+  watch(pathToProject+'/assets/libs/*.js', jslibs);
+  watch(pathToProject+'/assets/libs/*.css', csslibs);
+  watch(pathToProject+'/js/*.js').on('change',  browserSync.reload);
+
+  // browserS();
+// }
+
+
+function watchesLess(){
+  // csslibs();
+  // jslibs();
+
+  watch(pathToProject+'/assets/less/**/*.less', { ignoreInitial: false }, css);
+  watch(pathToProject+'/**/*.html').on('change',  browserSync.reload);
+  watch(pathToProject+'/js/*.js').on('change',  browserSync.reload);
+
+  // browserS();
+}
+
+
+
+exports.css = css;
+exports.html = html;
+
+exports.watches = series(parallel(html,css), parallel(browserS));
+exports.watches2 = series(parallel(html,cssmin), parallel( browserS));
+exports.watchesLess = watchesLess;
+
+exports.imagesprite = imagesprite;
+
+exports.imageMin = imageMin;
+exports.cssmin = series(css, cssmin);
+
+exports.csslibs = csslibs;
+exports.jslibs = jslibs;
+
+exports.default = parallel(html, css, jslibs);

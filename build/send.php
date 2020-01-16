@@ -59,7 +59,7 @@ $responseError = [  // коды ответов для js
 ];
 
      
-/*  Проверяем правильность ввода email */
+/*  Проверяем правильность ввода phone */
 if ( !$userData['phone'] ) {
     $response = $responseError[104];    //неправильный телефон
 } else {

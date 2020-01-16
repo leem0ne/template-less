@@ -1,23 +1,41 @@
 /*  МОДАЛЬНОЕ ОКНО  */
 .modal{
   position: relative;
-  width: 300px;
+  max-width: 430px;
   margin: 40px auto;
   background: #fff;
-  padding: 30px 20px;
+  padding: 50px 20px;
 
-  .xxs-min({
-    width: 400px;
-  });
-
+  
+  &__close{
+    position: absolute;
+    z-index: 5;
+    top: 20px;
+    right: 20px;
+    
+  }
 }
 
-.lity{
-  background: rgba(0,0,0,.6);
+@media screen and (min-width: @w-xxs) {
+  .modal{}
 }
-.lity-close{
-  opacity: 1;
+
+
+@media screen and (min-width: @w-xs) {
+  .modal{}
 }
-.lity-content:after{
-  // box-shadow: 0px 0px 40px 20px rgba(0, 0, 0, 0.35);
+
+
+@media screen and (min-width: @w-sm) {
+  .modal{}
+}
+
+
+@media screen and (min-width: @w-md) {
+  .modal{}
+}
+
+
+@media screen and (min-width: @w-lg) {
+  .modal{}
 }

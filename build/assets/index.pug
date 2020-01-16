@@ -1,107 +1,58 @@
-doctype html
-html(lang="ru")
-	head
-		meta(charset="utf-8")
-		title Title page
-		meta(http-equiv="X-UA-Compatible", content="IE=edge")
-		meta(name="keywords", content="")
-		meta(name="description", content="")
-		meta(name="viewport" content="width=device-width, initial-scale=1.0")
-		meta(name="format-detection" content="telephone=no")
-		meta(name="robots" content="nofollow,noindex")
-		link(rel="shortcut icon" href="img/favicon.png" type="image/png")
-		
-		//[if IE]> <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script> <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script> <![endif]
-		
-		link(href="css/libs.min.css", rel="stylesheet", type="text/css")
-		link(href="css/style.css", rel="stylesheet", type="text/css")
+extends ./pugs/_base.pug
 
-	body
-		//  Шапка  
-		header.header
-			.container
-				.header__row
-					.header__toggle
-						button.toggle
-							span
-							span
-							span
-					.header__logo
-						.logo
+block vars
+	- var pageTitle = 'Index sdf';
+
+block body
+	//  Навигация  
+	nav.nav#fix-menu
+		.container
+			include pugs/_menu.pug
+	//  /Навигация  
+
+	//  Шапка  
+	header.header
+		.container
+			.header__row
+				.header__toggle
+					button.toggle
+						span
+						span
+						span
+				.header__logo
+					.logo
+						a(href="#")
 							img.logo__img(src="img/logo.png", alt="Логотип")
-					.header__center
-						h2.desc-2 Далеко-далеко за словесными горами в стране.
-					.header__right
-						.phone
-							a.phone__link(href="tel:88005553535") 8-800-555-35-35
-						.phone
-							a.btn1.phone__btn(href="#modal-call") Заказать звонок
-		//  /Шапка  
+				.header__center
+					h2.desc-2 Далеко-далеко за словесными горами в стране.
+				.header__right
+					.phone
+						a.phone__link(href="tel:"+phone) #{phone21}
+							strong #{phone22}
+					.phone
+						a.btn1.phone__btn.js-modal-open(href="#modal-call") Заказать звонок
+	//  /Шапка  
 
-		//  Навигация  
-		nav.nav#top-menu
-			.container
-				ul.nav__menu
-					- var menus = [{name:'Link1', href:'#here1'}, {name:'Link2', href:'#here2'}, {name:'Link3', href:'#here3'}, {name:'Link4', href:'#here4'}];
-					for menu in menus
-						li.nav__item
-							a.nav__link(href=""+menu.href+"") #{menu.name}
-		//  /Навигация  
+	.main-page
+		include pugs/_top.pug
 
-		.main-page
-			//  Первый экран  
-			section.top
-				.container
-					.top__wrap
-						h1.desc-1 Далеко-далеко за словесными горами в стране, гласных и согласных живут рыбные тексты.
+		.slider#slider
+			.slider__wrap.js-slider-wrap
+				div 1
+				div 2
+				div 3
+				div 1
+				div 2
+				div 3
+			.slider__control
+				a.slider__arrow.slider__arrow_prev.js-slider-prev(role="button") PREV
+				.slider__info
+					span.slider__curr.js-slider-curr 00
+					|  / 
+					span.slider__count.js-slider-count 10
+				a.slider__arrow.slider__arrow_next.js-slider-next(role="button") NEXT
 
-					.top__video
-						iframe(src="https://www.youtube.com/embed/1Nk8TlNxvTg" allowfullscreen)
-			//  /Первый экран  
-
-
-
-
-		//  Подвал  
-		footer.footer
-			.container
-				.footer__row
-					.footer__logo
-						.footer__text Далеко-далеко за словесными горами в стране, гласных и согласных живут рыбные тексты.
-		//  /Подвал  
+	
 
 
-
-
-		//  Модальное окно Заказать звонок  
-		.modal.mfp-hide#modal-call
-			.form.form__modal
-				h3.form__desc Заказать звонок
-				form.form-box(action="send.php" method="post")
-					.form__box-input
-						input.form__input(type="text" name="name" placeholder="Ваше имя")
-					.form__box-input
-						input.form__input(type="email" name="email" placeholder="Ваш email*" title="youre@email.com" required)
-					.form__box-input
-						input.form__input(type="tel" name="phone" placeholder="Ваш телефон*" title="89012345678" pattern="^[0-9\\s\\(\\)\\+\\-]{1,18}$" required)
-					.form__box-submit
-						button.btn1.form__submit(type="submit" name="submit") Отправить
-						input(type="hidden" name="title" value="Заказать звонок")
-						input(type="hidden" name="orderfk" value="")
-					.form__box-checkbox
-						input.form__checkbox(type="checkbox" name="agree" checked id="agree-1")
-						label.form__label-checkbox(for="agree-1") Отправляя заявку вы соглашаетесь с 
-							a.form__policy(href="#") Политикой конфиденциальности
-		//  /Модальное окно Заказать звонок  
-
-
-		//  Модальное окно Заявка отправлена  
-		.modal.mfp-hide#modal-thanks
-			h3.form__desc Заявка отправлена
-			h5.form__subdesc Мы свяжемся с Вами в ближайшее время
-		//  /Модальное окно Заявка отправлена  
-
-
-
-		script(src='js/libs.min.js')
-		script(src='js/custom.js')
+	
