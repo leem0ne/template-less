@@ -4,11 +4,6 @@ block vars
 	- var pageTitle = 'Index sdf';
 
 block body
-	//  Навигация  
-	nav.nav#fix-menu
-		.container
-			include pugs/_menu.pug
-	//  /Навигация  
 
 	//  Шапка  
 	header.header
@@ -34,7 +29,7 @@ block body
 	//  /Шапка  
 
 	.main-page
-		include pugs/_top.pug
+		include pugs/sections/_top.pug
 
 		.slider#slider
 			.slider__wrap.js-slider-wrap
@@ -51,6 +46,27 @@ block body
 					|  / 
 					span.slider__count.js-slider-count 10
 				a.slider__arrow.slider__arrow_next.js-slider-next(role="button") NEXT
+	
+
+	
+	//  Навигация  
+	nav.nav#fix-menu
+		.container
+			include pugs/_menu.pug
+	//  /Навигация  
+
+	aside.aside#aside
+		button.aside__close.close.js-aside-toggle(type="button")
+			svg(role="img" width="16" height="16")
+				use(xlink:href="img/svg/sprite.svg#delete")
+		.aside__wrap
+			include pugs/_menu.pug
+			div
+				.phone
+					a.phone__link(href="tel:"+phone) #{phone21}
+						strong #{phone22}
+				include pugs/_messengers.pug
+	.aside__overlay.js-aside-toggle
 
 	
 

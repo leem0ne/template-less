@@ -18,7 +18,6 @@ const rename          = require('gulp-rename');
 
 const options = {
   folder: './build',
-  // folder: './public/wp-content/themes/homyroom',
   sprite: 'numbers',
 };
 
@@ -50,7 +49,7 @@ function css() {
         message: "Less-Error: <%= error.message %>",
         title: "Less"
       }))
-      .pipe(autoprefixer(['last 3 versions', '> 1%', 'ie 10'], {cascade: true}))
+      .pipe(autoprefixer(['last 5 versions', '> 1%', 'ie 10'], {cascade: true}))
     .pipe(sourcemaps.write('./'))
     .pipe(dest(pathToProject +'/css'))
     .pipe(browserSync.reload({ stream: true }));
@@ -65,7 +64,7 @@ function cssmin(){
       message: "Less-Error: <%= error.message %>",
       title: "Less"
     }))
-    .pipe(autoprefixer(['last 3 versions', '> 1%', 'ie 10'], {cascade: true}))
+    .pipe(autoprefixer(['last 5 versions', '> 1%', 'ie 10'], {cascade: true}))
     .pipe(gcmq())
     .pipe(cleanCSS({compatibility: 'ie10', format: 'keep-breaks'}))
     // .pipe(csso())
@@ -143,18 +142,19 @@ function imagesprite() {
 
 
 //  WATCHING files
-// function watches(){
+function watches(){
   // csslibs();
   // jslibs();
 
-  watch(pathToProject+'/assets/less/**/*.less', css);
-  watch(pathToProject+'/assets/**/*.pug', html);
-  watch(pathToProject+'/assets/libs/*.js', jslibs);
-  watch(pathToProject+'/assets/libs/*.css', csslibs);
+  watch(pathToProject+'/assets/less/**/*.less', { ignoreInitial: false }, css);
+  watch(pathToProject+'/assets/**/*.pug', { ignoreInitial: false }, html);
   watch(pathToProject+'/js/*.js').on('change',  browserSync.reload);
 
+  watch(pathToProject+'/assets/libs/*.js', { ignoreInitial: false }, jslibs);
+  watch(pathToProject+'/assets/libs/*.css', { ignoreInitial: false }, csslibs);
+
   // browserS();
-// }
+}
 
 
 function watchesLess(){
@@ -173,8 +173,8 @@ function watchesLess(){
 exports.css = css;
 exports.html = html;
 
-exports.watches = series(parallel(html,css), parallel(browserS));
-exports.watches2 = series(parallel(html,cssmin), parallel( browserS));
+exports.watches = series(parallel(html,css), parallel(watches, browserS));
+exports.watches2 = series(parallel(html,cssmin), parallel(watches, browserS));
 exports.watchesLess = watchesLess;
 
 exports.imagesprite = imagesprite;

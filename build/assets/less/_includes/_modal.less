@@ -1,18 +1,22 @@
 /*  МОДАЛЬНОЕ ОКНО  */
 .modal{
   position: relative;
-  max-width: 430px;
-  margin: 40px auto;
+  max-width: 480px;
+  width: 97vw;
+  margin: 20px auto;
   background: #fff;
-  padding: 50px 20px;
 
+  &__wrap{
+    max-height: calc(100vh - 40px);
+    overflow: auto;
+    padding: 50px 20px;
+  }
   
   &__close{
     position: absolute;
     z-index: 5;
     top: 20px;
     right: 20px;
-    
   }
 }
 

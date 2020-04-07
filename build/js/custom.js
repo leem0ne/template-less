@@ -46,6 +46,14 @@ function lazyloadWalsh (images){
 	});
 }
 
+/**
+ * Функция возвращает число с ведущим нулем, если число меньше 10
+ * param {Number} num
+ */
+function getFirstZeroNumbers(num) {
+	return ( num < 10 ) ? '0'+num : num;
+}
+
 
 $(document).ready(function(){
 
@@ -59,34 +67,44 @@ $(document).ready(function(){
 
 	//FIX_MENU
 	const winH = $(window).height(),
-				fixMenu = $('#fix-menu');
+				fixMenu = $('#fix-menu'),
+				asideWrap = $('#aside');
 				
 	$(fixMenu).css('display', 'block');
+	$(asideWrap).css('display', 'block');
 
 	$(window).on('load scroll', function() {
 		var top = $(this).scrollTop();
-		if ( top > ( winH / 3 ) ) {
-			$(fixMenu).addClass('nav_show');
+		if ( top > ( winH / 3 * 2 ) ) {
+			$(fixMenu).addClass('js-active');
 		} else {
-			$(fixMenu).removeClass('nav_show');
+			$(fixMenu).removeClass('js-active');
 		}
 	});
 
-	$('.js-nav-open').on('click', function() {
-		if ( $(this).hasClass('burger_active') ) {
-			$(this).removeClass('burger_active');
-			$(fixMenu).removeClass('nav_show');
-		} else {
-			$(this).addClass('burger_active');
-			$(fixMenu).addClass('nav_show');
-		}
+	$('.js-aside-toggle').on('click', function() {
+		$(asideWrap).toggleClass('js-active');
 	});
 
 	//scroll menu
 	$('.js-scroll-to').click( function(){
 		var href = $(this).attr('href');
-		scrollTo(href);
+		scrollTo(href, 800, -($(fixMenu).height()));
+		$(asideWrap).removeClass('js-active');
 		return false;
+	});
+
+
+	//Запрет на ввод букв в телефонах
+	$('input[type="tel"]').on('keypress', function(e){
+		let keyCode = e.keyCode;
+		if ( (keyCode < 48 || keyCode > 57) 
+					&& keyCode !== 32  //пробел
+					&& keyCode !== 40 //(
+					&& keyCode !== 41	//)
+					&& keyCode !== 45	//-
+					&& keyCode !== 43	//+
+			 ) return false;
 	});
 
 
@@ -148,6 +166,17 @@ $(document).ready(function(){
 	});
 
 
+	$('.messengers').on('click', '.js-messengers-toggle', function(e){
+		e.preventDefault();
+		let parent = $(this).closest('.messengers');
+		let input = $(parent).find('input.js-messengers-input');
+		let title = $(this).attr('title');
+		$(input).val(title);
+
+		$(parent).find('.js-messengers-toggle').removeClass('js-active');
+		$(this).addClass('js-active');
+	});
+
 
 	//Отправка заявок
 	$('input[name="agree"]').on('click', function() {
@@ -165,10 +194,10 @@ $(document).ready(function(){
 		$(form).find('input[required]').removeClass('alert');
 		$(submit).attr('disabled', 'disabled');
 		
-		$.post(
-			$(form).attr('action'),
-			$(form).serialize(),
-			function(dataJson){
+		$.post({
+			url:  $(form).attr('action'),
+			data: $(form).serialize(),
+			success: function(dataJson){
 				$(submit).removeAttr('disabled');
 				
 				let dataObj = JSON.parse(dataJson);
@@ -200,6 +229,6 @@ $(document).ready(function(){
 				};
 				
 			}
-		);
+		});
 	});
 });

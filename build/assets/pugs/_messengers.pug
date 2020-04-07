@@ -1,4 +1,18 @@
+- var whatsapp = 'https://wa.me/77479650545';
+- var telegram = 'https://t.me/+77479650545';
+- var facebook = 'https://facebook.com/';
+- var viber = 'viber://chat?number=12345678901';
+
 .messengers
-	a.messengers__link.messengers_whatsapp(href="https://wa.me/"+whatsapp) whatsapp
-	a.messengers__link.messengers_telegram(href="https://t.me/+"+telegram) telegram
-	a.messengers__link.messengers_viber(href="viber://chat?number="+viber) viber
+	a.messengers__item.messengers_telegram(href=telegram title="Telegram" aria-label="Telegram")
+		svg(role="img" width="22" height="22" aria-hidden="true" focusable="false")
+			use(xlink:href="img/svg/sprite.svg#telegram")
+	a.messengers__item.messengers_whatsapp(href=whatsapp title="Whatsapp" aria-label="Whatsapp")
+		svg(role="img" width="22" height="22" aria-hidden="true" focusable="false")
+			use(xlink:href="img/svg/sprite.svg#whatsapp")
+	a.messengers__item.messengers_facebook(href=facebook title="Facebook" aria-label="Facebook")
+		svg(role="img" width="22" height="22" aria-hidden="true" focusable="false")
+			use(xlink:href="img/svg/sprite.svg#facebook")
+	a.messengers__item.messengers_viber(href=viber title="Viber" aria-label="Viber")
+		svg(role="img" width="22" height="22" aria-hidden="true" focusable="false")
+			use(xlink:href="img/svg/sprite.svg#viber")

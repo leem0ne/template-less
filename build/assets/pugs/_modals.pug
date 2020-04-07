@@ -1,12 +1,12 @@
 //  Модальное окно Заказать звонок  
 .modal.lity-hide#modal-call
-	button.close.modal__close(type="button" data-lity-close)
-		svg(role="img")
-			use(xlink:href="img/svg/sprite.svg#close")
-	.modal__content
-		.form.form__modal
-			h3.form__desc Заказать звонок
-			form.form-box(action="send.php" method="post")
+	.modal__wrap
+		button.close.modal__close(type="button" data-lity-close)
+			svg(role="img" aria-hidden="true" focusable="false" width="18" height="18")
+				use(xlink:href="img/svg/sprite.svg#close")
+		.modal__content
+			h3.modal__desc Заказать звонок
+			form.form(action="send.php" method="post" autocomplete="off")
 				.form__box-input
 					input.form__input(type="text" name="name" placeholder="Ваше имя")
 				.form__box-input
@@ -26,10 +26,11 @@
 
 //  Модальное окно Заявка отправлена  
 .modal.lity-hide#modal-thanks
-	button.close.modal__close(type="button" data-lity-close)
-		svg(role="img")
-			use(xlink:href="img/svg/sprite.svg#close")
-	.modal__content
-		h3.form__desc Заявка отправлена
-		h5.form__subdesc Мы свяжемся с Вами в ближайшее время
+	.modal__wrap
+		button.close.modal__close(type="button" data-lity-close)
+			svg(role="img" aria-hidden="true" focusable="false" width="18" height="18")
+				use(xlink:href="img/svg/sprite.svg#close")
+		.modal__content
+			h3.form__desc Заявка отправлена
+			h5.form__subdesc Мы свяжемся с Вами в ближайшее время
 //  /Модальное окно Заявка отправлена  
