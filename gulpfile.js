@@ -13,6 +13,7 @@ const cleanCSS        = require('gulp-clean-css');
 const notify          = require("gulp-notify");
 const sourcemaps      = require('gulp-sourcemaps');
 const rename          = require('gulp-rename');
+const webp            = require('gulp-webp');
 
 
 
@@ -53,6 +54,7 @@ function css() {
     .pipe(sourcemaps.write('./'))
     .pipe(dest(pathToProject +'/css'))
     .pipe(browserSync.reload({ stream: true }));
+    // .pipe(browserSync.reload({ stream: true }));
 }
 
 
@@ -68,7 +70,7 @@ function cssmin(){
     .pipe(gcmq())
     .pipe(cleanCSS({compatibility: 'ie10', format: 'keep-breaks'}))
     // .pipe(csso())
-    // .pipe(rename('style.min.css'))
+    .pipe(rename('style.min.css'))
     .pipe(dest(pathToProject +'/css'));
 }
 
@@ -90,7 +92,7 @@ function jslibs() {
       'node_modules/jquery/dist/jquery.min.js',
       'node_modules/slick-carousel/slick/slick.min.js',
       'node_modules/lity/dist/lity.min.js',
-      // 'node_modules/imagesloaded/imagesloaded.pkgd.min.js',
+      'node_modules/imagesloaded/imagesloaded.pkgd.min.js',
       'node_modules/vanilla-lazyload/dist/lazyload.min.js',
       pathToProject +'/assets/libs/**/*.js',
     ])
@@ -111,6 +113,12 @@ function csslibs(){
     .pipe(dest(pathToProject +'/css'));
 }
 
+function imgToWebp(){
+  return src(pathToProject +'/img/**/*.jpg')
+    .pipe(webp({quality: 70}))
+    .pipe(dest(pathToProject +'/img/'));
+}
+
 
 //  COMPRESS images
 function imageMin(){
@@ -120,9 +128,9 @@ function imageMin(){
   return src(pathToProject +'/img/**/*', {ignore: '/**/sprite.svg'} )
     .pipe(imagemin({
       interlaced: true,
-        progressive: true,
-        optimizationLevel: 5,
-        // svgoPlugins: [{removeViewBox: true}]
+      progressive: true,
+      optimizationLevel: 5,
+      svgoPlugins: [{removeViewBox: true}]
     }))
     .pipe(dest(pathToProject +'/imgmin/'));
 }
@@ -146,7 +154,7 @@ function watches(){
   // csslibs();
   // jslibs();
 
-  watch(pathToProject+'/assets/less/**/*.less', { ignoreInitial: false }, css);
+  watch(pathToProject+'/assets/less/**/*.less', { ignoreInitial: false }, series(css, cssmin));
   watch(pathToProject+'/assets/**/*.pug', { ignoreInitial: false }, html);
   watch(pathToProject+'/js/*.js').on('change',  browserSync.reload);
 
@@ -173,16 +181,17 @@ function watchesLess(){
 exports.css = css;
 exports.html = html;
 
-exports.watches = series(parallel(html,css), parallel(watches, browserS));
+exports.watches = series(parallel(html,css), parallel(watches, browserS, imgToWebp));
 exports.watches2 = series(parallel(html,cssmin), parallel(watches, browserS));
 exports.watchesLess = watchesLess;
 
 exports.imagesprite = imagesprite;
 
 exports.imageMin = imageMin;
-exports.cssmin = series(css, cssmin);
+exports.imgToWebp = imgToWebp;
+exports.cssmin = cssmin;
 
 exports.csslibs = csslibs;
 exports.jslibs = jslibs;
 
-exports.default = parallel(html, css, jslibs);
+exports.default = parallel(html, cssmin, jslibs);

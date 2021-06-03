@@ -1,10 +1,13 @@
-block vars
+block basevars
 	- var phone = '+777777777777';
 	- var phone21 = "+7 (999) ";
 	- var phone22 = "999-99-99";
-	- var whatsapp = '8888888888888';
-	- var telegram = '9999999999999';
-	- var viber = '0000000000000';
+	- var whatsapp = 'https://wa.me/77479650545';
+	- var telegram = 'https://t.me/+77479650545';
+	- var facebook = 'https://facebook.com/';
+	- var viber = 'viber://chat?number=12345678901';
+
+block vars
 	- var pageTitle = 'Home';
 
 doctype html
@@ -18,17 +21,26 @@ html(lang="ru")
 		meta(name="viewport" content="width=device-width, initial-scale=1.0")
 		meta(name="format-detection" content="telephone=no")
 		meta(name="robots" content="nofollow,noindex")
-		link(rel="shortcut icon" href="img/favicon.png" type="image/png")
+
+		//- link(rel="preload" href="fonts/.woff" as="font" type="font/woff" crossorigin="anonymous")
+
+		meta(property="og:title" content="")
+		meta(property="og:description" content="")
+		meta(property="og:image" content="")
+		meta(property="og:url" content="")
 		
 		//[if IE]> <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script> <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script> <![endif]
 		
 		link(href="css/libs.min.css", rel="stylesheet", type="text/css")
+		link(href="css/header.css", rel="stylesheet", type="text/css")
 		link(href="css/style.css", rel="stylesheet", type="text/css")
+		link(rel="shortcut icon" href="img/favicon.png" type="image/png")
 
 	body
 		block body
 
 
 		include _footer.pug
+		include _widget.pug
 		include _modals.pug
 		include _scripts.pug

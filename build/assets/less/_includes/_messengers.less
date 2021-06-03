@@ -1,0 +1,45 @@
+.messengers{
+  margin: 0 -7px;
+
+  &__item{
+    display: inline-block;
+    margin: 0 7px;
+    padding: 0;
+    width: 36px;
+    height: 36px;
+    line-height: 32px;
+    text-align: center;
+    color: #fff;
+    transition-duration: .4s;
+    transition-property: background;
+
+    &:hover{
+      background: @color1;
+    }
+
+    svg{
+      display: inline-block;
+      vertical-align: middle;
+      fill: currentColor
+    }
+  }
+
+  &__title{
+    font-weight: 300;
+    display: inline-block;
+    margin: 10px 0 10px 7px;
+  }
+
+  &_telegram{
+    background:@telegram;
+  }
+  &_whatsapp{
+    background:@whatsapp;
+  }
+  &_facebook{
+    background:@facebook;
+  }
+  &_viber{
+    background:@viber;
+  }
+}

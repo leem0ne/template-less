@@ -1,48 +1,29 @@
 /*  ШАПКА  */
 .header{
   padding: 15px 0 15px;
-
-  &__row{
-    margin: 0 -15px;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    justify-content: center;
-
-    .sm-min({
-      justify-content: space-between;
-      flex-wrap: nowrap;
-    });
-  }
+  margin: 0 -15px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  
   &__toggle{
     width: 34px;
     margin: 0 15px;
-    .sm-min({
-      display: none;
-    });
   }
   &__logo{
     width: 200px;
     margin: 0 15px;
   }
-  &__center{
-    width: 500px;
-    margin: 15px 15px;
+  &__btns{
+    width: 300px;
+    margin: 0 15px;
     text-align: center;
-
-    .sm-min({
-      text-align: left;
-      width: 400px;
-      });
   }
   &__right{
     width: 200px;
     margin: 0 15px;
-    text-align: center;
-
-    .sm-min({
-      text-align: right;
-      });
+    text-align: right;
   }
 }
 

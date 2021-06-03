@@ -1,0 +1,70 @@
+.btn1{
+  display: inline-block;
+  width: 100%;
+  max-width: 200px;
+  padding: 15px 15px 16px;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  background: green;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+  transition-duration: .4s;
+  transition-property: background;
+
+  &:hover{
+    background: darken(green, 10%);
+    text-decoration: none;
+  }
+}
+
+
+.logo{
+  max-width: 200px;
+}
+.phone{
+  .fz18;
+  white-space: nowrap;
+}
+
+.toggle{
+  display: block;
+  width: 34px;
+  padding: 4px 5px 0;
+  background: transparent;
+  border: 0px;
+  text-align: center;
+  font-size: 1px;
+  cursor: pointer;
+  outline: none;
+
+  span{
+    display: inline-block;
+    width: 24px;
+    height: 3px;
+    background: green;
+    margin-bottom: 4px;
+  }
+}
+
+.close{
+  display: inline-block;
+  position: relative;
+  padding: 0;
+  background: none;
+  border: 0px;
+  outline: none;
+  padding: 0;
+  cursor: pointer;
+  transition: .3s color;
+  color: green;
+
+  svg, img{
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    user-select: none;
+    pointer-events: none;
+  }
+}

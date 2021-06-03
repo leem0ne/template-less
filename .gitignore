@@ -1,8 +1,22 @@
 node_modules/
 mydocuments/
 public/PHPMailer
+
+
 *.txt
 *.zip
 package-lock.json
 *.lock
 *.phar
+
+
+
+# for WP
+# public/*
+# !public/wp-content/
+
+# public/wp-content/*
+# !public/wp-content/themes/
+
+# public/wp-content/themes/*
+# !public/wp-content/themes/mp-service/

@@ -1,8 +1,8 @@
 //  Модальное окно Заказать звонок  
 .modal.lity-hide#modal-call
 	.modal__wrap
-		button.close.modal__close(type="button" data-lity-close)
-			svg(role="img" aria-hidden="true" focusable="false" width="18" height="18")
+		button.close.modal__close(type="button" data-lity-close aria-label="Close")
+			svg(role="img" aria-hidden="true" focusable="false")
 				use(xlink:href="img/svg/sprite.svg#close")
 		.modal__content
 			h3.modal__desc Заказать звонок
@@ -18,8 +18,10 @@
 					input(type="hidden" name="title" value="Заказать звонок")
 					input(type="hidden" name="orderfk" value="")
 				.form__box-checkbox
-					input.form__checkbox(type="checkbox" name="agree" checked id="agree-1")
-					label.form__label-checkbox(for="agree-1") Отправляя заявку вы соглашаетесь с 
+					label.form__label-checkbox
+						input.form__checkbox(type="checkbox" name="agree" checked)
+						span.form__checker
+						|  Отправляя заявку вы соглашаетесь с 
 						a.form__policy(href="#") Политикой конфиденциальности
 //  /Модальное окно Заказать звонок  
 
@@ -27,10 +29,10 @@
 //  Модальное окно Заявка отправлена  
 .modal.lity-hide#modal-thanks
 	.modal__wrap
-		button.close.modal__close(type="button" data-lity-close)
-			svg(role="img" aria-hidden="true" focusable="false" width="18" height="18")
+		button.close.modal__close(type="button" data-lity-close aria-label="Close")
+			svg(role="img" aria-hidden="true" focusable="false")
 				use(xlink:href="img/svg/sprite.svg#close")
 		.modal__content
-			h3.form__desc Заявка отправлена
-			h5.form__subdesc Мы свяжемся с Вами в ближайшее время
+			h3.modal__desc Заявка отправлена
+			h5.modal__subdesc Мы свяжемся с Вами в ближайшее время
 //  /Модальное окно Заявка отправлена  
